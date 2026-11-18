@@ -4,6 +4,8 @@ Cenas 3D em pixel-art que você gira com o mouse no navegador. Cada cena é escr
 
 As cenas são geradas com o motor procedural **[Ink Studio](https://github.com/siliconjungle/shapeshift-labs-ink-studio)** (licença MIT). Ele não é IA generativa: você descreve formas, cores e luz em código, e ele calcula os splats.
 
+O site se chama **Splat Gallery**. **Dimension Explorer** é o nome deste projeto e do modo 3D: você entra nele por um cartão da galeria e sai pelo botão **Sair ✕** (ou **Esc**), voltando para o mesmo cartão.
+
 **Ver online:** https://ostrowskii.github.io/dimension-explorer/
 
 ## Cenas

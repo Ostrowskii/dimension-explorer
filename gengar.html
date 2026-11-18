@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Gengar em splats</title>
+<title>Gengar · Splat Gallery</title>
 <meta name="description" content="Fan art do Gengar esculpida em Gaussian splats e explorável em 3D.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,7 +65,7 @@
 <body class="ghost">
 <div class="wrap">
   <nav class="topbar" aria-label="Navegação">
-    <a class="brand" href="index.html">Dimension Explorer</a>
+    <a class="brand" href="index.html">Splat Gallery</a>
     <div class="menu">
       <a href="index.html#cenas">Cenas</a>
       <a href="index.html#filme">Filme</a>
@@ -77,17 +77,17 @@
   <header>
     <h1>Gengar, em splats</h1>
     <p class="lead">Fan art feita com a mesma técnica das cenas da torre. O corpo, as orelhas e os espinhos são formas esculpidas; os olhos e o sorriso são pintados direto na superfície. Duas versões, para comparar o antes e o depois.</p>
-    <p class="hint"><kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco</p>
+    <p class="hint">Escolha uma cena para entrar no <strong>Dimension Explorer</strong>, o modo 3D: <kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco · <kbd>Esc</kbd> sai</p>
   </header>
 
   <section class="scenes" aria-label="Versões do Gengar">
-    <a class="scene" href="picachu/index.html">
+    <a class="scene" id="picachu" href="picachu/index.html">
       <img src="thumbs/picachu.png" alt="Gengar roxo sorrindo sobre um chão de grama escura" width="720" height="480">
-      <div class="text"><span class="num">VERSÃO 1 · 25.424 SPLATS</span><h3>Picachu</h3><p>Primeira versão: peças encaixadas, sorriso com grade de dentes e chão de grama com pedras.</p><span class="go">Explorar em 3D →</span></div>
+      <div class="text"><span class="num">VERSÃO 1 · 25.424 SPLATS</span><h3>Picachu</h3><p>Primeira versão: peças encaixadas, sorriso com grade de dentes e chão de grama com pedras.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
-    <a class="scene" href="pikachu/index.html">
+    <a class="scene" id="pikachu" href="pikachu/index.html">
       <img src="thumbs/pikachu.png" alt="Gengar detalhado com dentes triangulares sobre um chão liso" width="720" height="480">
-      <div class="text"><span class="num">VERSÃO 2 · 96.156 SPLATS</span><h3>Pikachu</h3><p>Membros fundidos ao corpo com curvas suaves, dentes triangulares encaixados, olhos com contorno e brilho, chão liso.</p><span class="go">Explorar em 3D →</span></div>
+      <div class="text"><span class="num">VERSÃO 2 · 96.156 SPLATS</span><h3>Pikachu</h3><p>Membros fundidos ao corpo com curvas suaves, dentes triangulares encaixados, olhos com contorno e brilho, chão liso.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
   </section>
 
@@ -167,5 +167,14 @@
     <p>Gengar é um personagem de Pokémon, © Nintendo / Creatures / GAME FREAK / The Pokémon Company. Fan art sem fins comerciais, não afiliada.</p>
   </footer>
 </div>
+<script>
+  // Lembra de onde a pessoa entrou no Dimension Explorer, para o botão Sair voltar ao mesmo cartão.
+  document.querySelectorAll('a.scene').forEach(card => card.addEventListener('click', () => {
+    try {
+      sessionStorage.setItem('splat-gallery-return', location.href.split('#')[0] + '#' + card.id);
+      sessionStorage.setItem('splat-gallery-entering', '1');
+    } catch (error) { /* sem armazenamento: o Sair usa o histórico do navegador */ }
+  }));
+</script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dimension Explorer</title>
+<title>Splat Gallery</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
 <body>
 <div class="wrap">
   <nav class="topbar" aria-label="Navegação">
-    <a class="brand" href="#">Dimension Explorer</a>
+    <a class="brand" href="#">Splat Gallery</a>
     <div class="menu">
       <a href="#cenas">Cenas</a>
       <a href="#filme">Filme</a>
@@ -25,25 +25,25 @@
   <header>
     <h1>Uma torre no bosque, em splats</h1>
     <p class="lead">Quatro cenas 3D em pixel-art que você gira com o mouse. Cada uma foi escrita em código e é formada por dezenas de milhares de Gaussian splats, pequenas manchas 3D com cor, forma e orientação.</p>
-    <p class="hint"><kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco</p>
+    <p class="hint">Escolha uma cena para entrar no <strong>Dimension Explorer</strong>, o modo 3D: <kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco · <kbd>Esc</kbd> sai</p>
   </header>
 
   <section class="scenes" id="cenas" aria-label="Cenas">
-    <a class="scene" href="dist/index.html">
+    <a class="scene" id="dist" href="dist/index.html">
       <img src="thumbs/dist.png" alt="Torre de pedra com telhado roxo e dourado, cercada de árvores e um caminho de pedras" width="720" height="480">
-      <div class="text"><span class="num">CENA 1 · 51.728 SPLATS</span><h3>Torre</h3><p>Torre de pedra com janelas acesas, jardim, árvores e caminho até a porta.</p><span class="go">Explorar em 3D →</span></div>
+      <div class="text"><span class="num">CENA 1 · 51.728 SPLATS</span><h3>Torre</h3><p>Torre de pedra com janelas acesas, jardim, árvores e caminho até a porta.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
-    <a class="scene" href="next-scene/index.html">
+    <a class="scene" id="next-scene" href="next-scene/index.html">
       <img src="thumbs/next-scene.png" alt="A torre ao lado de uma árvore de copa dourada, com feixes de sol" width="720" height="480">
-      <div class="text"><span class="num">CENA 2 · 66.354 SPLATS</span><h3>Árvore</h3><p>Uma árvore antiga 5/4 mais alta que a torre, com feixes de sol paralelos atravessando a copa.</p><span class="go">Explorar em 3D →</span></div>
+      <div class="text"><span class="num">CENA 2 · 66.354 SPLATS</span><h3>Árvore</h3><p>Uma árvore antiga 5/4 mais alta que a torre, com feixes de sol paralelos atravessando a copa.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
-    <a class="scene" href="third-scene/index.html">
+    <a class="scene" id="third-scene" href="third-scene/index.html">
       <img src="thumbs/third-scene.png" alt="A torre e a árvore dourada com um lago azul em primeiro plano" width="720" height="480">
-      <div class="text"><span class="num">CENA 3 · 71.846 SPLATS</span><h3>Lago</h3><p>Um lago de margem irregular com reflexo planar recalculado a cada ângulo da câmera.</p><span class="go">Explorar em 3D →</span></div>
+      <div class="text"><span class="num">CENA 3 · 71.846 SPLATS</span><h3>Lago</h3><p>Um lago de margem irregular com reflexo planar recalculado a cada ângulo da câmera.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
-    <a class="scene" href="fourth-scene/index.html">
+    <a class="scene" id="fourth-scene" href="fourth-scene/index.html">
       <img src="thumbs/fourth-scene.png" alt="Versão mais detalhada da torre, árvore e lago" width="720" height="480">
-      <div class="text"><span class="num">CENA 4 · 87.667 SPLATS</span><h3>Filme</h3><p>Copa com mais ramos e folhas, preparada para o vídeo da câmera em arco.</p><span class="go">Explorar em 3D →</span></div>
+      <div class="text"><span class="num">CENA 4 · 87.667 SPLATS</span><h3>Filme</h3><p>Copa com mais ramos e folhas, preparada para o vídeo da câmera em arco.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
   </section>
 
@@ -89,5 +89,14 @@
     <p>Motor procedural: <a href="https://github.com/siliconjungle/shapeshift-labs-ink-studio">Ink Studio</a>, © 2026 siliconjungle, licença MIT.</p>
   </footer>
 </div>
+<script>
+  // Lembra de onde a pessoa entrou no Dimension Explorer, para o botão Sair voltar ao mesmo cartão.
+  document.querySelectorAll('a.scene').forEach(card => card.addEventListener('click', () => {
+    try {
+      sessionStorage.setItem('splat-gallery-return', location.href.split('#')[0] + '#' + card.id);
+      sessionStorage.setItem('splat-gallery-entering', '1');
+    } catch (error) { /* sem armazenamento: o Sair usa o histórico do navegador */ }
+  }));
+</script>
 </body>
 </html>

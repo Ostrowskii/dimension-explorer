@@ -21,6 +21,7 @@ for (const scene of scenes) {
     fs.writeFileSync(path.join(out, scene, file), data);
   }
 }
+fs.copyFileSync(path.join(root, 'explorer.js'), path.join(out, 'explorer.js'));
 fs.copyFileSync(path.join(root, 'fourth-scene/orbit.mp4'), path.join(out, 'fourth-scene/orbit.mp4'));
 fs.mkdirSync(path.join(out, 'thumbs'));
 for (const image of [...scenes, 'como-pontos', 'como-elipses', 'como-modelo']) fs.copyFileSync(path.join(root, 'thumbs', `${image}.png`), path.join(out, 'thumbs', `${image}.png`));

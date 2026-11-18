@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Como fazer uma cena em splats</title>
+<title>Como fazer · Splat Gallery</title>
 <meta name="description" content="Passo a passo para criar sua própria cena 3D em Gaussian splats com o Ink Studio e o Dimension Explorer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,7 +61,7 @@
 <body>
 <div class="wrap">
   <nav class="topbar" aria-label="Navegação">
-    <a class="brand" href="index.html">Dimension Explorer</a>
+    <a class="brand" href="index.html">Splat Gallery</a>
     <div class="menu">
       <a href="index.html#cenas">Cenas</a>
       <a href="index.html#filme">Filme</a>
@@ -126,7 +126,7 @@ git --version</pre></div>
       <li>
         <h3>Baixe os dois projetos lado a lado</h3>
         <div class="body">
-          <p>O <strong>Ink Studio</strong> é o motor que transforma formas em splats. O <strong>Dimension Explorer</strong> tem o visualizador 3D e o modelo de cena. As duas pastas precisam ficar dentro da mesma pasta.</p>
+          <p>O <strong>Ink Studio</strong> é o motor que transforma formas em splats. O <strong>Dimension Explorer</strong> é este projeto: a Splat Gallery, o modo 3D onde as cenas são exploradas e o modelo de cena. As duas pastas precisam ficar dentro da mesma pasta.</p>
           <div class="cmd"><pre>mkdir splats
 cd splats
 git clone https://github.com/siliconjungle/shapeshift-labs-ink-studio
@@ -195,9 +195,9 @@ node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render cena.js --out lad
         <h3>Coloque na página inicial <span class="optional">OPCIONAL</span></h3>
         <div class="body">
           <p>No <code>index.html</code> da raiz, copie um dos cartões <code>&lt;a class="scene"&gt;</code> e troque o link, a imagem e o texto. A imagem de prévia fica em <code>thumbs/</code>, com 720×480 pixels; uma captura de tela da sua cena serve.</p>
-          <div class="cmd"><pre>&lt;a class="scene" href="minha-cena/index.html"&gt;
+          <div class="cmd"><pre>&lt;a class="scene" id="minha-cena" href="minha-cena/index.html"&gt;
   &lt;img src="thumbs/minha-cena.png" alt="Descreva a cena" width="720" height="480"&gt;
-  &lt;div class="text"&gt;&lt;span class="num"&gt;CENA 5&lt;/span&gt;&lt;h3&gt;Minha cena&lt;/h3&gt;&lt;p&gt;O que tem nela.&lt;/p&gt;&lt;span class="go"&gt;Explorar em 3D →&lt;/span&gt;&lt;/div&gt;
+  &lt;div class="text"&gt;&lt;span class="num"&gt;CENA 5&lt;/span&gt;&lt;h3&gt;Minha cena&lt;/h3&gt;&lt;p&gt;O que tem nela.&lt;/p&gt;&lt;span class="go"&gt;◈ Entrar no Dimension Explorer&lt;/span&gt;&lt;/div&gt;
 &lt;/a&gt;</pre></div>
         </div>
       </li>
