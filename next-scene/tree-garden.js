@@ -63,41 +63,34 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
       S.ball([x + 0.38 * scale, y + 1.55 * scale, z - 0.12], [0.54 * scale, 0.72 * scale, 0.56 * scale], leaves, { res: 0.1 });
     }
 
-    // An old tree as tall as the tower, with a broad, warm crown.
+    // An old tree 5/4 as tall as the tower, with a broad, warm crown.
     const tx = -4.05, tz = -0.7, ty = height(tx, tz);
+    const treeScale = 1.25;
+    const treePoint = (dx, dy, dz) => [tx + dx * treeScale, ty + dy * treeScale, tz + dz * treeScale];
     const bark = { r: [10, 11, 12] };
     const goldLeaves = { r: [12, 13, 13, 15] };
-    S.tube([[tx, ty, tz], [tx - 0.12, ty + 1.5, tz], [tx + 0.1, ty + 3.5, tz - 0.12], [tx + 0.55, ty + 5.4, tz]], 0.52, 0.20, bark, { res: 0.1 });
+    S.tube([treePoint(0, 0, 0), treePoint(-0.12, 1.5, 0), treePoint(0.1, 3.5, -0.12), treePoint(0.55, 5.4, 0)], 0.52 * treeScale, 0.20 * treeScale, bark, { res: 0.11 });
     for (const [dx, dy, dz, reach] of [
       [-2.1, 5.5, -0.4, 0.23], [-1.25, 6.5, 0.4, 0.25],
       [1.65, 6.0, -0.2, 0.26], [2.3, 5.0, 0.35, 0.20],
       [-0.25, 7.1, -0.45, 0.18]
     ]) {
-      S.tube([[tx + 0.05, ty + 3.3, tz], [tx + dx * 0.55, ty + dy * 0.78, tz + dz * 0.5], [tx + dx, ty + dy, tz + dz]], 0.20, reach * 0.35, bark, { res: 0.12 });
+      S.tube([treePoint(0.05, 3.3, 0), treePoint(dx * 0.55, dy * 0.78, dz * 0.5), treePoint(dx, dy, dz)], 0.20 * treeScale, reach * 0.35 * treeScale, bark, { res: 0.13 });
     }
     for (const [dx, dy, dz, rx, ry, rz] of [
       [-1.9, 5.8, -0.3, 1.15, 0.8, 0.85], [-0.9, 6.55, 0.2, 1.25, 0.85, 0.9],
       [0.35, 6.85, -0.4, 1.25, 0.9, 0.95], [1.5, 6.1, -0.1, 1.15, 0.8, 0.85],
       [2.15, 5.25, 0.35, 0.95, 0.7, 0.75], [-0.45, 7.25, -0.45, 1.1, 0.65, 0.85]
-    ]) S.ball([tx + dx, ty + dy, tz + dz], [rx, ry, rz], goldLeaves, { res: 0.12 });
+    ]) S.ball(treePoint(dx, dy, dz), [rx * treeScale, ry * treeScale, rz * treeScale], goldLeaves, { res: 0.13 });
 
     // Light shafts pass through the branches and land on the flowered clearing.
     const shafts = [
-      [[tx + 0.4, ty + 6.25, tz + 0.6], [-1.9, height(-1.9, 2.7) + 0.1, 2.7]],
-      [[tx + 1.1, ty + 5.9, tz + 0.8], [-0.8, height(-0.8, 3.3) + 0.1, 3.3]],
-      [[tx - 0.8, ty + 6.3, tz + 0.7], [-3.1, height(-3.1, 3.7) + 0.1, 3.7]],
-      [[tx + 1.7, ty + 5.25, tz + 0.6], [0.0, height(0, 4.2) + 0.1, 4.2]]
+      [treePoint(0.4, 6.25, 0.6), [-1.9, height(-1.9, 2.7) + 0.1, 2.7]],
+      [treePoint(1.1, 5.9, 0.8), [-0.8, height(-0.8, 3.3) + 0.1, 3.3]],
+      [treePoint(-0.8, 6.3, 0.7), [-3.1, height(-3.1, 3.7) + 0.1, 3.7]],
+      [treePoint(1.7, 5.25, 0.6), [0.0, height(0, 4.2) + 0.1, 4.2]]
     ];
-    for (const [start, end] of shafts) {
-      for (let i = 0; i < 3; i++) {
-        const offset = (i - 1) * 0.11;
-        S.tube(
-          [[start[0] + offset, start[1], start[2]], [end[0] + offset * 1.8, end[1], end[2]]],
-          0.018, 0.035, { r: [13, 15, 15], em: true }, { res: 0.11 }
-        );
-      }
-      S.ball(end, [0.28, 0.035, 0.28], { r: [13, 15], em: true }, { res: 0.09 });
-    }
+    const atmosphere = shafts.map(([from, to]) => K.atmosphere.shaft({ from, to, radius: 0.38, density: 0.18, color: '#f0ca72' }));
 
     // Low shrubs and small flowers around the clearing.
     for (let i = 0; i < 38; i++) {
@@ -108,8 +101,21 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
     }
 
     S.bake();
+    // Soft, translucent splats make the light visible in the air. Add after the solid geometry.
+    for (const [from, to] of shafts) {
+      for (let i = 0; i < 550; i++) {
+        const t = B.R();
+        const angle = B.R() * Math.PI * 2;
+        const radius = Math.sqrt(B.R()) * (0.20 + 0.20 * t);
+        const x = from[0] + (to[0] - from[0]) * t + Math.cos(angle) * radius;
+        const y = from[1] + (to[1] - from[1]) * t;
+        const z = from[2] + (to[2] - from[2]) * t + Math.sin(angle) * radius;
+        B.dab(x, y, z, [0, 0, 1], [1, 0, 0], 0.13, 0.13, 0.13, [240, 202, 114], 0.08 + (1 - t) * 0.07, { em: true });
+      }
+    }
     return B.finish({
-      cam: { target: [-0.9, 2.9, 0], dist: 20, pitch: 0.18, yaw: 0.08, sway: 0.18 },
+      cam: { target: [-1.1, 3.4, 0], dist: 22, pitch: 0.18, yaw: 0.08, sway: 0.18 },
+      atmosphere,
       detail: 15,
       palName: 'Woodland tower',
       dither: 0.22,

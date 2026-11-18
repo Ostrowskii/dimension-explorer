@@ -12,6 +12,7 @@ const colors = new Uint8Array(world.count * 3);
 const sizes = new Float32Array(world.count);
 const covariance = new Float32Array(world.count * 6);
 const density = new Float32Array(world.count);
+let transparentStart = world.count;
 
 for (let index = 0; index < world.count; index++) {
   const source = index * 16;
@@ -25,6 +26,7 @@ for (let index = 0; index < world.count; index++) {
   colors[target + 2] = (packed >>> 16) & 255;
   sizes[index] = Math.max(0.025, Math.sqrt(Math.abs(world.data[source + 4]) + Math.abs(world.data[source + 8]) + Math.abs(world.data[source + 10])));
   density[index] = world.data[source + 3];
+  if (transparentStart === world.count && density[index] < 1) transparentStart = index;
   for (let component = 0; component < 6; component++) {
     covariance[index * 6 + component] = world.data[source + [4, 5, 6, 8, 9, 10][component]];
   }
@@ -37,6 +39,8 @@ const output = `window.TOWER_SCENE = ${JSON.stringify({
   target: world.cam.target,
   distance: world.cam.dist,
   radius: world.radius,
+  transparentStart,
+  atmosphere: world.atmosphere,
   positions: encoded(positions),
   colors: encoded(colors),
   sizes: encoded(sizes),

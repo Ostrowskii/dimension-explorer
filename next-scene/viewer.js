@@ -48,8 +48,13 @@
       vec2 q = (gl_PointCoord - 0.5) * vPointSize;
       q.y = -q.y;
       float distanceSquared = q.x * q.x * vInverse.x + 2.0 * q.x * q.y * vInverse.y + q.y * q.y * vInverse.z;
-      if (distanceSquared > 6.25 + clamp(vDensity - 3.0, -1.0, 2.0) * 0.4) discard;
-      gl_FragColor = vec4(vColor, 1.0);
+      if (vDensity < 1.0) {
+        if (distanceSquared > 9.0) discard;
+        gl_FragColor = vec4(vColor, vDensity * exp(-0.5 * distanceSquared));
+      } else {
+        if (distanceSquared > 6.25 + clamp(vDensity - 3.0, -1.0, 2.0) * 0.4) discard;
+        gl_FragColor = vec4(vColor, 1.0);
+      }
     }
   `;
   const compile = (type, source) => { const shader = gl.createShader(type); gl.shaderSource(shader, source); gl.compileShader(shader); return shader; };
@@ -96,7 +101,7 @@
     for (let column = 0; column < 4; column++) for (let row = 0; row < 4; row++) for (let k = 0; k < 4; k++) out[column * 4 + row] += projection[k * 4 + row] * view[column * 4 + k];
     return out;
   };
-  const render = () => { const ratio = Math.min(devicePixelRatio || 1, 2); const width = Math.round(innerWidth * ratio), height = Math.round(innerHeight * ratio); if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; } gl.viewport(0, 0, width, height); gl.clearColor(.045, .105, .125, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.enable(gl.DEPTH_TEST); gl.disable(gl.BLEND); gl.uniformMatrix4fv(matrixLocation, false, cameraMatrix()); const cy = Math.cos(state.yaw), sy = Math.sin(state.yaw), cp = Math.cos(state.pitch), sp = Math.sin(state.pitch); gl.uniform3f(rightLocation, cy, 0, -sy); gl.uniform3f(upLocation, -sp * sy, cp, -sp * cy); gl.uniform1f(heightLocation, height); gl.uniform1f(maxPointLocation, maxPointSize); gl.drawArrays(gl.POINTS, 0, scene.count); requestAnimationFrame(render); };
+  const render = () => { const ratio = Math.min(devicePixelRatio || 1, 2); const width = Math.round(innerWidth * ratio), height = Math.round(innerHeight * ratio); if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; } gl.viewport(0, 0, width, height); gl.clearColor(.045, .105, .125, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.enable(gl.DEPTH_TEST); gl.disable(gl.BLEND); gl.uniformMatrix4fv(matrixLocation, false, cameraMatrix()); const cy = Math.cos(state.yaw), sy = Math.sin(state.yaw), cp = Math.cos(state.pitch), sp = Math.sin(state.pitch); gl.uniform3f(rightLocation, cy, 0, -sy); gl.uniform3f(upLocation, -sp * sy, cp, -sp * cy); gl.uniform1f(heightLocation, height); gl.uniform1f(maxPointLocation, maxPointSize); gl.drawArrays(gl.POINTS, 0, scene.transparentStart); gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE); gl.depthMask(false); gl.drawArrays(gl.POINTS, scene.transparentStart, scene.count - scene.transparentStart); gl.depthMask(true); requestAnimationFrame(render); };
   let drag = null;
   canvas.addEventListener('pointerdown', event => { drag = { x: event.clientX, y: event.clientY, button: event.button }; canvas.setPointerCapture(event.pointerId); });
   canvas.addEventListener('pointermove', event => { if (!drag) return; const dx = event.clientX - drag.x, dy = event.clientY - drag.y; drag.x = event.clientX; drag.y = event.clientY; if (drag.button === 2) { state.target[0] -= dx * state.distance / 950; state.target[1] += dy * state.distance / 950; } else { state.yaw -= dx * .008; state.pitch = Math.max(-1.35, Math.min(1.35, state.pitch - dy * .008)); } });
