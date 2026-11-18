@@ -107,15 +107,16 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
 
     S.bake();
     // Soft, translucent splats make the light visible in the air. Add after the solid geometry.
+    const lightSamplesPerShaft = 1800;
     for (const [from, to] of shafts) {
-      for (let i = 0; i < 550; i++) {
-        const t = B.R();
-        const angle = B.R() * Math.PI * 2;
+      for (let i = 0; i < lightSamplesPerShaft; i++) {
+        const t = (i + B.R()) / lightSamplesPerShaft;
+        const angle = i * 2.399963229728653 + B.R() * 0.4;
         const radius = Math.sqrt(B.R()) * (0.20 + 0.20 * t);
         const x = from[0] + (to[0] - from[0]) * t + Math.cos(angle) * radius;
         const y = from[1] + (to[1] - from[1]) * t;
         const z = from[2] + (to[2] - from[2]) * t + Math.sin(angle) * radius;
-        B.dab(x, y, z, [0, 0, 1], [1, 0, 0], 0.13, 0.13, 0.13, [240, 202, 114], 0.025 + (1 - t) * 0.025, { em: true });
+        B.dab(x, y, z, [0, 0, 1], [1, 0, 0], 0.13, 0.13, 0.13, [240, 202, 114], 0.0075 + (1 - t) * 0.0075, { em: true });
       }
     }
     return B.finish({
