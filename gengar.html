@@ -31,13 +31,24 @@
   .pair img { width: 100%; height: auto; aspect-ratio: 4 / 3; border-radius: 10px; border: 1px solid var(--line); image-rendering: pixelated; }
   .pair figcaption { font-family: var(--display); color: var(--gold); font-size: .8rem; letter-spacing: .12em; }
   .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
-  .diff { border-collapse: collapse; width: 100%; min-width: 640px; font-size: .92rem; }
+  .diff { border-collapse: collapse; width: 100%; min-width: 760px; font-size: .92rem; }
   .diff th, .diff td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
   .diff thead th { font-family: var(--display); font-weight: 500; color: var(--gold); letter-spacing: .06em; background: var(--panel); }
   .diff tbody th { color: var(--cream); font-weight: 600; white-space: nowrap; }
   .diff td { color: var(--moss); }
   .diff td:last-child { color: var(--cream); }
   .diff tr:last-child th, .diff tr:last-child td { border-bottom: 0; }
+  .diff small { font-family: var(--body); color: var(--moss); letter-spacing: 0; font-size: .75rem; }
+  .diff td:nth-child(2), .diff td:nth-child(3), .diff .gain { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .diff td:last-child { color: var(--moss); }
+  .diff td:nth-child(3) { color: var(--cream); }
+  .diff .gain { color: var(--gold); font-family: var(--display); font-size: 1.05rem; }
+  .diff .gain.down { color: var(--moss); }
+  .diff .total th, .diff .total td { background: var(--panel); }
+  .diff .total td:last-child { font-size: .82rem; }
+  .notes { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .notes li { border-top: 2px solid var(--line); padding-top: 12px; color: var(--moss); font-size: .92rem; min-width: 0; }
+  .notes strong { display: block; color: var(--cream); margin-bottom: 4px; }
   .numbers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
   .numbers div { border-top: 2px solid var(--gold); padding-top: 10px; display: grid; gap: 2px; }
   .numbers b { font-family: var(--display); font-size: 1.6rem; font-weight: 500; color: var(--cream); font-variant-numeric: tabular-nums; }
@@ -47,6 +58,7 @@
     .clips, .pair { grid-template-columns: minmax(0, 1fr); }
     .clip.featured figcaption { grid-template-columns: minmax(0, 1fr); }
     .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .notes { grid-template-columns: minmax(0, 1fr); }
   }
 </style>
 </head>
@@ -112,10 +124,10 @@
     <h2>O que mudou da versão 1 para a 2</h2>
     <p class="lead">As duas versões usam o mesmo corpo e as mesmas proporções. A segunda foi refeita peça por peça para aguentar a câmera de perto. As imagens abaixo são do mesmo ângulo, renderizadas pelo Ink Studio.</p>
     <div class="numbers">
-      <div><b>25.424 → 96.156</b><span>splats na cena</span></div>
-      <div><b>0,045 → 0,026</b><span>espaçamento entre splats no corpo (<code>res</code>)</span></div>
-      <div><b>7 → 13</b><span>espinhos nas costas</span></div>
-      <div><b>15 → 18</b><span>detalhe do render (<code>detail</code>)</span></div>
+      <div><b>654 → 2.851</b><span>splats por m² no corpo e no rosto (×4,4)</span></div>
+      <div><b>104 → 58</b><span>splats por m² no chão (quase metade)</span></div>
+      <div><b>0,033 → 0,019</b><span>tamanho médio de cada splat no corpo</span></div>
+      <div><b>0,5 s → 10,7 s</b><span>tempo para montar a cena</span></div>
     </div>
     <div class="pair">
       <figure><img src="thumbs/comp-picachu-frente.png" alt="Rosto da versão 1: olhos vermelhos lisos e dentes em grade" width="720" height="540" loading="lazy"><figcaption>VERSÃO 1 · DE FRENTE</figcaption></figure>
@@ -123,22 +135,31 @@
       <figure><img src="thumbs/comp-picachu-lado.png" alt="Versão 1 de lado e de trás: sete espinhos e peças encaixadas" width="720" height="540" loading="lazy"><figcaption>VERSÃO 1 · DE LADO</figcaption></figure>
       <figure><img src="thumbs/comp-pikachu-lado.png" alt="Versão 2 de lado e de trás: treze espinhos curvos fundidos ao corpo" width="720" height="540" loading="lazy"><figcaption>VERSÃO 2 · DE LADO</figcaption></figure>
     </div>
+    <div class="pair">
+      <figure><img src="thumbs/pontos-picachu.png" alt="Versão 1 desenhada só como pontos: poucos splats, dá para ver através do corpo" width="720" height="540" loading="lazy"><figcaption>VERSÃO 1 · SÓ OS PONTOS</figcaption></figure>
+      <figure><img src="thumbs/pontos-pikachu.png" alt="Versão 2 desenhada só como pontos: splats densos que formam a superfície" width="720" height="540" loading="lazy"><figcaption>VERSÃO 2 · SÓ OS PONTOS</figcaption></figure>
+    </div>
+    <p class="lead">Cada splat aparece como um ponto de 2 pixels, sem a elipse que o visualizador normalmente desenha. Na versão 1 dá para ver através do corpo; na versão 2 os pontos já formam a superfície. Repare também no chão, que ficou mais ralo de propósito.</p>
     <div class="table-wrap">
       <table class="diff">
-        <thead><tr><th>Parte</th><th>Versão 1</th><th>Versão 2</th></tr></thead>
+        <thead><tr><th>Parte</th><th>Versão 1<br><small>splats · res</small></th><th>Versão 2<br><small>splats · res</small></th><th>Ganho</th><th>Técnica que mudou</th></tr></thead>
         <tbody>
-          <tr><th>Corpo</th><td>Bola, orelhas, braços e pernas como peças separadas que se encostam.</td><td>Tudo vira um sólido só com <code>S.join('round', corpo, peças, { r: 0.14 })</code>: as junções ganham curvas suaves, sem emenda.</td></tr>
-          <tr><th>Olhos</th><td>Vermelho chapado com uma borda escura e pupila redonda.</td><td>Contorno preto, vermelho que clareia para cima, anel em volta da pupila, sombra de sobrancelha e um ponto de brilho branco.</td></tr>
-          <tr><th>Boca</th><td>Faixa branca cortada por uma grade de linhas.</td><td>Dentes triangulares de cima e de baixo, encaixados em zigue-zague; garganta escura e vermelha entre eles; dentes das pontas mais sombreados.</td></tr>
-          <tr><th>Espinhos</th><td>7 cones retos.</td><td>13 cones curvos (feitos com 3 pontos), incluindo espinhos menores entre os grandes.</td></tr>
-          <tr><th>Orelhas</th><td>Tubo de 3 pontos.</td><td>Tubo de 4 pontos, mais longo e curvado para fora.</td></tr>
-          <tr><th>Mãos e pés</th><td>Garras saindo direto da mão e do pé.</td><td>Dedos próprios (tubos) e dedos dos pés (bolinhas), com garras finas separadas e mais afiadas (<code>res 0.022</code>).</td></tr>
-          <tr><th>Rabo</th><td>Curva de 3 pontos.</td><td>Curva de 4 pontos, mais enrolada.</td></tr>
-          <tr><th>Pele</th><td>Uma cor por tom de luz.</td><td>Leve variação de ruído no tom (<code>mod</code>) e um brilho pequeno onde o sol reflete (<code>gloss</code>).</td></tr>
-          <tr><th>Chão</th><td>Grama com relevo e 9 pedras.</td><td>Disco liso cinza-escuro, em dois tons, para não competir com o personagem.</td></tr>
+          <tr><th>Corpo</th><td>9.888 · 0,045</td><td>43.381 · 0,026</td><td class="gain">×4,4</td><td>De uma bola isolada para um sólido único: <code>S.join('round', corpo, peças, { r: 0.14 })</code> amostra corpo e emendas de uma vez.</td></tr>
+          <tr><th>Orelhas e espinhos</th><td>3.134 · 0,05</td><td>25.225 · 0,026</td><td class="gain">×8</td><td>De 7 para 13 espinhos, curvos (tubo de 3 pontos) e mais longos; orelhas com 4 pontos. Todos fundidos ao corpo.</td></tr>
+          <tr><th>Braços e mãos</th><td>1.494 · 0,05</td><td>9.873 · 0,026</td><td class="gain">×6,6</td><td>Dedos próprios (tubos) dentro da junção; garras separadas com <code>res 0.022</code> para manter a ponta fina.</td></tr>
+          <tr><th>Pernas e pés</th><td>3.345 · 0,05</td><td>12.741 · 0,026</td><td class="gain">×3,8</td><td>Dedos dos pés em bolinhas, com garras separadas.</td></tr>
+          <tr><th>Olhos</th><td>296</td><td>1.196</td><td class="gain">×4</td><td>A função <code>tex</code> passou de 3 para 6 tons: contorno, sombra de sobrancelha, gradiente, anel, pupila e brilho.</td></tr>
+          <tr><th>Boca</th><td>360</td><td>1.382</td><td class="gain">×3,8</td><td>De uma grade de linhas para dentes calculados por uma onda triangular: os de cima e os de baixo deslocados meio dente, encaixando em zigue-zague.</td></tr>
+          <tr><th>Chão</th><td>6.907 · 0,10</td><td>2.358 · 0,16</td><td class="gain down">×0,34</td><td>Sem relevo e sem as 9 pedras: o detalhe saiu do chão e foi para o personagem.</td></tr>
+          <tr class="total"><th>Total</th><td>25.424</td><td>96.156</td><td class="gain">×3,8</td><td>Valores por parte são aproximados (separados pela posição e cor de cada splat); os totais são exatos.</td></tr>
         </tbody>
       </table>
     </div>
+    <ul class="notes">
+      <li><strong>Por que cresceu mais que o esperado.</strong> <code>res</code> é o espaçamento entre splats, então a densidade cresce com 1/res². Passar de 0,045 para 0,026 daria cerca de ×3; o medido foi ×4,4 porque a junção suave também cobre as curvas de emenda entre as peças.</li>
+      <li><strong>Onde o ganho se concentrou.</strong> Espinhos (×8) e braços (×6,6) tiveram o maior salto: além de amostrados mais fino, ficaram mais numerosos e mais longos. O chão foi o único lugar que perdeu splats.</li>
+      <li><strong>O que não custou nenhum splat.</strong> A variação de tom da pele (<code>mod</code>), o brilho (<code>gloss</code>) e o rosto pintado (<code>tex</code>) só mudam a cor de splats que já existem.</li>
+    </ul>
   </section>
 
   <footer>
