@@ -72,7 +72,22 @@ html { scroll-behavior: smooth; }
 .back { color: var(--gold); font-weight: 600; text-decoration: none; }
 .back:hover, .back:focus-visible { text-decoration: underline; }
 
+.pipeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pipeline figure { margin: 0; display: grid; grid-template-rows: auto 1fr; align-content: start; gap: 10px; min-width: 0; }
+.pipeline img, .pipeline .codecard { box-sizing: border-box; min-width: 0; width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); image-rendering: pixelated; object-fit: cover; }
+.pipeline figcaption { display: grid; align-content: start; gap: 4px; color: var(--moss); font-size: .93rem; }
+.pipeline figcaption strong { color: var(--cream); font-weight: 600; }
+.pipeline .tag { font-family: var(--display); color: var(--gold); font-size: .8rem; letter-spacing: .12em; }
+.codecard { margin: 0; padding: 16px; overflow: hidden; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: clamp(.62rem, 1.15vw, .8rem); line-height: 1.6; color: var(--moss); white-space: pre; }
+.codecard .k { color: var(--gold); }
+.codecard .c { color: #6f8a86; }
+.codecard .n { color: #e59a6b; }
+.cta { justify-self: start; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; text-decoration: none; color: var(--night); background: var(--gold); border-radius: 999px; padding: 10px 20px; }
+.cta:hover, .cta:focus-visible { filter: brightness(1.08); outline: 2px solid var(--cream); outline-offset: 2px; }
+
 @media (max-width: 720px) {
+  .pipeline { grid-template-columns: minmax(0, 1fr); }
+  .pipeline .codecard { aspect-ratio: auto; }
   .scenes, .steps { grid-template-columns: minmax(0, 1fr); }
   .wrap { padding-block: 32px 48px; gap: 44px; }
 }

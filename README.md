@@ -51,18 +51,16 @@ git clone https://github.com/siliconjungle/shapeshift-labs-ink-studio
 cd shapeshift-labs-ink-studio && node cli/ink-studio.js scenes   # teste rápido
 ```
 
-### 2. Crie a pasta da cena a partir da mais parecida
+### 2. Copie o modelo
 
-Nunca edite uma cena congelada; copie-a. Para um objeto isolado, a melhor base é `pikachu/`; para cenário com torre/lago, `fourth-scene/`.
+A pasta `modelo/` é uma cena inicial pronta (um cogumelo) com visualizador e exportador. Copie-a e edite só o `cena.js` da cópia:
 
 ```bash
 cd dimension-explorer
-mkdir minha-cena
-cp pikachu/viewer.js pikachu/style.css pikachu/export-scene.js pikachu/index.html minha-cena/
-cp pikachu/pikachu.js minha-cena/minha-cena.js
+cp -r modelo minha-cena
 ```
 
-No `export-scene.js`, troque `./pikachu.js` por `./minha-cena.js` e o texto `pikachu/scene-data.js` por `minha-cena/scene-data.js`.
+O passo a passo ilustrado está em `como-fazer.html` (também no site, no menu **Como é feito**).
 
 ### 3. Escreva a cena
 
@@ -109,7 +107,7 @@ Dicas que funcionaram nas cenas daqui:
 
 ```bash
 cd minha-cena
-node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render minha-cena.js --out minha-cena.png --w 900 --h 900
+node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render cena.js --out cena.png --w 900 --h 900
 ```
 
 Ângulos: `--yaw 1.5` (lado), `--yaw 3.14` (costas), `--pitch 0.8` (de cima).
@@ -117,7 +115,7 @@ node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render minha-cena.js --o
 ### 5. Gere os dados 3D e abra no visualizador
 
 ```bash
-node export-scene.js          # cria minha-cena/scene-data.js
+node export-scene.js          # dentro de minha-cena/: cria scene-data.js
 ```
 
 Edite `minha-cena/index.html` (título, `<h1>`, seletor de projetos) e adicione um link para `minha-cena/index.html` no seletor das outras cenas. Na página inicial (`index.html`), copie um dos cartões `<a class="scene">` e gere a imagem de prévia em `thumbs/` (uma captura de tela da cena, 720×480). Abra no Chrome e recarregue com `Ctrl+Shift+R` a cada mudança.
@@ -153,7 +151,7 @@ cd fourth-scene && node render-video.js
 ## Como funciona por dentro
 
 ```text
-minha-cena.js ──(Ink Studio: S.bake)──▶ splats (16 números cada)
+cena.js ──(Ink Studio: S.bake)──▶       splats (16 números cada)
       │
 export-scene.js ──▶ scene-data.js (posição, cor, covariância, densidade em base64)
       │

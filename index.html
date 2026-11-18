@@ -55,11 +55,33 @@
 
   <section class="how" id="como-e-feito">
     <h2>Como é feito</h2>
-    <ol class="steps">
-      <li><strong>Cena em código</strong><p>Formas como <code>S.lathe</code> (torre), <code>S.ball</code> (copas) e <code>S.tube</code> (troncos) descrevem a cena em JavaScript.</p></li>
-      <li><strong>Formas viram splats</strong><p>O motor Ink Studio amostra as superfícies, aplica a luz do sol e gera um splat com 16 números para cada ponto.</p></li>
-      <li><strong>WebGL desenha elipses</strong><p>Um visualizador próprio projeta cada splat como uma elipse orientada. Sem bibliotecas e sem servidor.</p></li>
-    </ol>
+    <p class="lead">Cada cena começa como código, vira uma nuvem de splats e é desenhada como elipses que formam superfícies. Dá para refazer tudo em oito passos, a partir de um modelo pronto.</p>
+    <div class="pipeline">
+      <figure>
+<pre class="codecard" aria-label="Trecho de código da torre"><span class="c">// corpo da torre</span>
+<span class="k">S.lathe</span>([<span class="n">0</span>, <span class="n">0</span>, <span class="n">0</span>], <span class="n">5.5</span>,
+  t =&gt; <span class="n">1.38</span> - t * <span class="n">0.22</span>,
+  pedra, { res: <span class="n">0.09</span> });
+
+<span class="c">// telhado em cone</span>
+<span class="k">S.lathe</span>([<span class="n">0</span>, <span class="n">5.6</span>, <span class="n">0</span>], <span class="n">2.25</span>,
+  t =&gt; <span class="n">1.52</span> * (<span class="n">1</span> - t),
+  telhado, { res: <span class="n">0.075</span> });
+
+<span class="c">// vira splats</span>
+<span class="k">S.bake</span>();</pre>
+        <figcaption><span class="tag">1 · CÓDIGO</span><strong>Você descreve formas</strong>Um perfil girado em torno do eixo vertical vira o corpo da torre; outro, mais fino no topo, vira o telhado.</figcaption>
+      </figure>
+      <figure>
+        <img src="thumbs/como-pontos.png" alt="A torre formada por milhares de pontos coloridos soltos" width="720" height="720" loading="lazy">
+        <figcaption><span class="tag">2 · SPLATS</span><strong>O motor espalha pontos</strong>O Ink Studio cobre cada superfície com splats: posição, cor, luz e o formato de cada mancha. Aqui eles aparecem encolhidos, como pontos.</figcaption>
+      </figure>
+      <figure>
+        <img src="thumbs/como-elipses.png" alt="A mesma torre com os pontos desenhados como elipses, formando paredes sólidas" width="720" height="720" loading="lazy">
+        <figcaption><span class="tag">3 · ELIPSES</span><strong>O WebGL fecha a superfície</strong>Cada ponto é desenhado como uma elipse virada na direção da parede. Elas se sobrepõem e a torre fica sólida.</figcaption>
+      </figure>
+    </div>
+    <a class="cta" href="como-fazer.html">Passo a passo completo →</a>
   </section>
 
   <footer>
