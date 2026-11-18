@@ -2,6 +2,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const outputPath = path.resolve(__dirname, 'scene-data.js');
+if (fs.existsSync(outputPath)) {
+  console.error('A cena Lago foi arquivada: scene-data.js não será sobrescrito.');
+  process.exit(1);
+}
 
 const studioRoot = path.resolve(__dirname, '../../shapeshift-labs-ink-studio');
 const kit = require(path.join(studioRoot, 'index.js')).load();

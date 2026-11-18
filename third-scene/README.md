@@ -4,4 +4,4 @@ Terceira cena explorável do Dimension Explorer. Mantém a torre de pedra, a ár
 
 O terreno é recortado para abrir espaço para a água. O visualizador aplica o mesmo princípio da reflexão planar do Ink Studio: desenha a cena espelhada em uma textura a partir do ângulo atual e usa essa imagem apenas na superfície do lago. A água usa 1.381 splats translúcidos sobrepostos e uma margem clara. O projeto não carrega cópias espelhadas abaixo do terreno; o visualizador WebGL local lê os dados exportados sem precisar do motor depois da geração.
 
-Abra `index.html` para explorar. A cena-fonte é `pond-garden.js`; rode `node export-scene.js` nesta pasta para regenerar `scene-data.js` após alterações.
+Esta versão foi preservada. Abra `index.html` para explorar. A cena-fonte é `pond-garden.js`, e `export-scene.js` foi protegido contra a substituição dos dados arquivados.
