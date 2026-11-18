@@ -84,7 +84,8 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
     ]) S.ball(treePoint(dx, dy, dz), [rx * treeScale, ry * treeScale, rz * treeScale], goldLeaves, { res: 0.13 });
 
     // Parallel sunlight enters through nearby gaps in the crown.
-    const sunDirection = [0.36, -1, 0.42];
+    // S.sun points from the ground toward the sun; shafts travel the opposite way.
+    const sunDirection = [-S.sun[0] / S.sun[1], -1, -S.sun[2] / S.sun[1]];
     const sunlightStart = [-0.7, -0.25, 0.25, 0.7].map(dx => treePoint(dx, 6.8, 0.7));
     const shafts = sunlightStart.map(from => {
       let travel = from[1];
