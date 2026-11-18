@@ -116,7 +116,7 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
       const angle = i * Math.PI * 2 / 74;
       const x = pond.x + Math.cos(angle) * pond.rx * (1.02 + B.R() * 0.09);
       const z = pond.z + Math.sin(angle) * pond.rz * (1.02 + B.R() * 0.09);
-      S.ball([x, height(x, z) + 0.03, z], [0.11 + B.R() * 0.11, 0.05 + B.R() * 0.04, 0.11 + B.R() * 0.12], darkStone, { res: 0.07 });
+      S.ball([x, height(x, z) + 0.03, z], [0.11 + B.R() * 0.11, 0.05 + B.R() * 0.04, 0.11 + B.R() * 0.12], stone, { res: 0.07 });
     }
 
     S.bake();
@@ -124,13 +124,13 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
     const reflectionMap = Array.from({ length: 22 }, (_, i) => i >= 12 ? 20 : i >= 5 ? 19 : 18);
     B.mirror(waterY, () => true, reflectionMap, { gap: 2.5, maxH: 10 });
     // The translucent surface lets mirrored splats show through the pond opening.
-    for (let z = pond.z - pond.rz; z <= pond.z + pond.rz; z += 0.115) {
-      for (let x = pond.x - pond.rx; x <= pond.x + pond.rx; x += 0.115) {
+    for (let z = pond.z - pond.rz; z <= pond.z + pond.rz; z += 0.085) {
+      for (let x = pond.x - pond.rx; x <= pond.x + pond.rx; x += 0.085) {
         const edge = pondRadius(x, z);
         if (edge >= 0.99) continue;
         const ripple = Math.sin(x * 12 + z * 5) + Math.sin(z * 14 - x * 3);
-        const color = ripple > 1.6 ? 20 : ripple < -1.1 ? 18 : 19;
-        B.disc(x, waterY + 0.012, z, B.UP, 0.11, 0.015, B.P[color], 0.58);
+        const color = ripple > 0.9 ? 20 : ripple < -1.5 ? 18 : 19;
+        B.disc(x, waterY + 0.012, z, B.UP, 0.17, 0.015, B.P[color], 0.32);
       }
     }
     // Soft, translucent splats make the light visible in the air. Add after the solid geometry.
