@@ -17,4 +17,6 @@ h1 { margin: 0; font-family: Georgia, serif; font-weight: 500; font-size: 1.65re
 .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 button { border: 1px solid #d8c48f77; border-radius: 999px; padding: 8px 12px; color: #f5edda; background: #29443e; font: inherit; cursor: pointer; }
 button:hover { background: #416151; }
+.video-link { display: inline-block; margin-top: 13px; color: #f0ca72; font-size: .88rem; text-underline-offset: 3px; }
+.video-link:hover, .video-link:focus-visible { color: #fff0ad; }
 @media (max-width: 600px) { .panel { top: 12px; left: 12px; width: calc(100vw - 24px); padding: 14px; } .hint { max-width: 260px; } }
