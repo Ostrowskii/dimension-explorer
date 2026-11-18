@@ -13,15 +13,44 @@
   };
   const positions = decode(scene.positions, Float32Array);
   const colors = decode(scene.colors, Uint8Array);
-  const sizes = decode(scene.sizes, Float32Array);
+  const covariance = scene.covariance && decode(scene.covariance, Float32Array);
+  const density = scene.density && decode(scene.density, Float32Array);
   const vertex = `
-    attribute vec3 position; attribute vec3 color; attribute float size;
-    uniform mat4 camera; uniform float pixelRatio; varying vec3 vColor;
-    void main() { vec4 p = camera * vec4(position, 1.0); gl_Position = p; gl_PointSize = clamp(size * 72.0 * pixelRatio / max(0.4, p.w), 2.0, 18.0); vColor = color / 255.0; }
+    attribute vec3 position; attribute vec3 color;
+    attribute vec3 covA; attribute vec3 covB; attribute float density;
+    uniform mat4 camera; uniform vec3 cameraRight; uniform vec3 cameraUp;
+    uniform float viewportHeight; uniform float maxPointSize;
+    varying vec3 vColor; varying vec3 vInverse; varying float vPointSize; varying float vDensity;
+    float covarianceAlong(vec3 a, vec3 b) {
+      return a.x * b.x * covA.x + (a.x * b.y + a.y * b.x) * covA.y
+        + (a.x * b.z + a.z * b.x) * covA.z + a.y * b.y * covB.x
+        + (a.y * b.z + a.z * b.y) * covB.y + a.z * b.z * covB.z;
+    }
+    void main() {
+      vec4 p = camera * vec4(position, 1.0);
+      gl_Position = p;
+      float scale = viewportHeight * 0.5 * ${1 / Math.tan(Math.PI / 7)} / max(0.4, p.w);
+      float a = max(0.0001, covarianceAlong(cameraRight, cameraRight) * scale * scale);
+      float b = covarianceAlong(cameraRight, cameraUp) * scale * scale;
+      float c = max(0.0001, covarianceAlong(cameraUp, cameraUp) * scale * scale);
+      float eigen = 0.5 * (a + c + sqrt((a - c) * (a - c) + 4.0 * b * b));
+      gl_PointSize = clamp(5.2 * sqrt(eigen), 2.0, maxPointSize);
+      float determinant = max(0.000001, a * c - b * b);
+      vInverse = vec3(c, -b, a) / determinant;
+      vPointSize = gl_PointSize;
+      vColor = color / 255.0;
+      vDensity = density;
+    }
   `;
   const fragment = `
-    precision mediump float; varying vec3 vColor;
-    void main() { vec2 p = gl_PointCoord * 2.0 - 1.0; float edge = smoothstep(1.0, 0.7, dot(p, p)); gl_FragColor = vec4(vColor, edge); }
+    precision highp float; varying vec3 vColor; varying vec3 vInverse; varying float vPointSize; varying float vDensity;
+    void main() {
+      vec2 q = (gl_PointCoord - 0.5) * vPointSize;
+      q.y = -q.y;
+      float distanceSquared = q.x * q.x * vInverse.x + 2.0 * q.x * q.y * vInverse.y + q.y * q.y * vInverse.z;
+      if (distanceSquared > 6.25 + clamp(vDensity - 3.0, -1.0, 2.0) * 0.4) discard;
+      gl_FragColor = vec4(vColor, 1.0);
+    }
   `;
   const compile = (type, source) => { const shader = gl.createShader(type); gl.shaderSource(shader, source); gl.compileShader(shader); return shader; };
   const program = gl.createProgram();
@@ -33,9 +62,24 @@
     const buffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buffer); gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
     const attribute = gl.getAttribLocation(program, name); gl.enableVertexAttribArray(attribute); gl.vertexAttribPointer(attribute, size, type, false, 0, 0);
   };
-  bind('position', positions, 3, gl.FLOAT); bind('color', colors, 3, gl.UNSIGNED_BYTE); bind('size', sizes, 1, gl.FLOAT);
+  bind('position', positions, 3, gl.FLOAT); bind('color', colors, 3, gl.UNSIGNED_BYTE);
+  if (covariance && density) {
+    const first = new Float32Array(scene.count * 3);
+    const second = new Float32Array(scene.count * 3);
+    for (let i = 0; i < scene.count; i++) {
+      first.set(covariance.subarray(i * 6, i * 6 + 3), i * 3);
+      second.set(covariance.subarray(i * 6 + 3, i * 6 + 6), i * 3);
+    }
+    bind('covA', first, 3, gl.FLOAT);
+    bind('covB', second, 3, gl.FLOAT);
+    bind('density', density, 1, gl.FLOAT);
+  }
   const matrixLocation = gl.getUniformLocation(program, 'camera');
-  const pixelRatioLocation = gl.getUniformLocation(program, 'pixelRatio');
+  const rightLocation = gl.getUniformLocation(program, 'cameraRight');
+  const upLocation = gl.getUniformLocation(program, 'cameraUp');
+  const heightLocation = gl.getUniformLocation(program, 'viewportHeight');
+  const maxPointLocation = gl.getUniformLocation(program, 'maxPointSize');
+  const maxPointSize = gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE)[1];
   const initial = { yaw: 0.08, pitch: 0.18, distance: scene.distance, target: [...scene.target] };
   const state = { ...initial, target: [...initial.target] };
   const normalize = vector => { const length = Math.hypot(...vector) || 1; return vector.map(value => value / length); };
@@ -52,7 +96,7 @@
     for (let column = 0; column < 4; column++) for (let row = 0; row < 4; row++) for (let k = 0; k < 4; k++) out[column * 4 + row] += projection[k * 4 + row] * view[column * 4 + k];
     return out;
   };
-  const render = () => { const ratio = Math.min(devicePixelRatio || 1, 2); const width = innerWidth * ratio, height = innerHeight * ratio; if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; } gl.viewport(0, 0, width, height); gl.clearColor(.045, .105, .125, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.enable(gl.DEPTH_TEST); gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.uniformMatrix4fv(matrixLocation, false, cameraMatrix()); gl.uniform1f(pixelRatioLocation, ratio); gl.drawArrays(gl.POINTS, 0, scene.count); requestAnimationFrame(render); };
+  const render = () => { const ratio = Math.min(devicePixelRatio || 1, 2); const width = Math.round(innerWidth * ratio), height = Math.round(innerHeight * ratio); if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; } gl.viewport(0, 0, width, height); gl.clearColor(.045, .105, .125, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.enable(gl.DEPTH_TEST); gl.disable(gl.BLEND); gl.uniformMatrix4fv(matrixLocation, false, cameraMatrix()); const cy = Math.cos(state.yaw), sy = Math.sin(state.yaw), cp = Math.cos(state.pitch), sp = Math.sin(state.pitch); gl.uniform3f(rightLocation, cy, 0, -sy); gl.uniform3f(upLocation, -sp * sy, cp, -sp * cy); gl.uniform1f(heightLocation, height); gl.uniform1f(maxPointLocation, maxPointSize); gl.drawArrays(gl.POINTS, 0, scene.count); requestAnimationFrame(render); };
   let drag = null;
   canvas.addEventListener('pointerdown', event => { drag = { x: event.clientX, y: event.clientY, button: event.button }; canvas.setPointerCapture(event.pointerId); });
   canvas.addEventListener('pointermove', event => { if (!drag) return; const dx = event.clientX - drag.x, dy = event.clientY - drag.y; drag.x = event.clientX; drag.y = event.clientY; if (drag.button === 2) { state.target[0] -= dx * state.distance / 950; state.target[1] += dy * state.distance / 950; } else { state.yaw -= dx * .008; state.pitch = Math.max(-1.35, Math.min(1.35, state.pitch - dy * .008)); } });
