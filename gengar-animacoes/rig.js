@@ -71,7 +71,7 @@ const segDist = (p, a, b) => {
 };
 
 // Monta a cena do Gengar (com a paleta estendida para os efeitos) e devolve o boneco pronto para animar.
-function load({ extraPalette = [], fx } = {}) {
+function load({ extraPalette = [], fx, flatFloor = false } = {}) {
   let basePalette = null;
   const wrapped = Object.assign({}, kit, {
     makeBuilder: (seed, pal) => { basePalette = pal; return kit.makeBuilder(seed, [...pal, ...extraPalette]); }
@@ -90,7 +90,12 @@ function load({ extraPalette = [], fx } = {}) {
   for (let i = 0; i < N; i++) {
     const q = i * 16, p = [base[q], base[q + 1], base[q + 2]];
     const rgb = base[q + 7] | 0, hex = ((rgb & 255) << 16) | (rgb & 0xff00) | ((rgb >>> 16) & 255);
-    if (p[1] < 0.03 && floor.has(hex)) { part[i] = -1; continue; }
+    if (p[1] < 0.03 && floor.has(hex)) {
+      part[i] = -1;
+      // chão liso: tira a sombra fixa do Gengar parado (as animações desenham a sombra que se move)
+      if (flatFloor) { const h = basePalette[14]; base[q + 7] = ((h >> 16) & 255) | (h & 0xff00) | ((h & 255) << 16); }
+      continue;
+    }
     const e = Math.hypot((p[0] - C[0]) / RADII[0], (p[1] - C[1]) / RADII[1], (p[2] - C[2]) / RADII[2]);
     const outside = smooth((e - 0.98) / 0.16);
     let best = 0, bestW = 0;
@@ -140,7 +145,7 @@ function load({ extraPalette = [], fx } = {}) {
     world, palette, part, weight, N, fxRows, fxGroups, totalFx,
     /** pose: { body: affine, armR, armL, legR, legL: affine (locais, aplicados antes do corpo) }
         fxPose(name) devolve { T: affine | null (null esconde), alpha: 0..1 } para cada grupo de efeito */
-    pose(pose, fxPose) {
+    pose(pose, fxPose, { clipY = -Infinity } = {}) {
       const body = pose.body || IDENTITY;
       const bones = names.map(n => compose(body, pose[n] || IDENTITY));
       for (let i = 0; i < N; i++) {
@@ -155,6 +160,9 @@ function load({ extraPalette = [], fx } = {}) {
         out[d] = pb[0] + (pk[0] - pb[0]) * w;
         out[d + 1] = pb[1] + (pk[1] - pb[1]) * w;
         out[d + 2] = pb[2] + (pk[2] - pb[2]) * w;
+      }
+      if (clipY > -Infinity) { // o que afundou abaixo do chão some
+        for (let i = 0; i < N; i++) if (part[i] >= 0 && out[i * 16 + 1] < clipY) { out[i * 16 + 1] = -500; out[i * 16 + 3] = 0; }
       }
       for (const [name, [a, b]] of Object.entries(fxGroups)) {
         const state = fxPose ? fxPose(name) : null;
