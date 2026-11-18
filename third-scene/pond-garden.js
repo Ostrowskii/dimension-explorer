@@ -120,17 +120,14 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
     }
 
     S.bake();
-    // Ink Studio's mirror copies nearby forms below the water plane in cool tones.
-    const reflectionMap = Array.from({ length: 22 }, (_, i) => i >= 12 ? 20 : i >= 5 ? 19 : 18);
-    B.mirror(waterY, () => true, reflectionMap, { gap: 2.5, maxH: 10 });
-    // The translucent surface lets mirrored splats show through the pond opening.
+    // The viewer captures a planar reflection and shows it only on these water splats.
     for (let z = pond.z - pond.rz; z <= pond.z + pond.rz; z += 0.085) {
       for (let x = pond.x - pond.rx; x <= pond.x + pond.rx; x += 0.085) {
         const edge = pondRadius(x, z);
         if (edge >= 0.99) continue;
         const ripple = Math.sin(x * 12 + z * 5) + Math.sin(z * 14 - x * 3);
         const color = ripple > 0.9 ? 20 : ripple < -1.5 ? 18 : 19;
-        B.disc(x, waterY + 0.012, z, B.UP, 0.17, 0.015, B.P[color], 0.32);
+        B.disc(x, waterY + 0.012, z, B.UP, 0.17, 0.015, B.P[color], 0.32, { k: 7 });
       }
     }
     // Soft, translucent splats make the light visible in the air. Add after the solid geometry.
@@ -149,6 +146,7 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
     return B.finish({
       cam: { target: [-1.0, 3.1, -0.7], dist: 21, pitch: 0.42, yaw: 3.0, sway: 0.18 },
       atmosphere,
+      pond: { ...pond, waterY },
       detail: 15,
       palName: 'Woodland tower',
       dither: 0.22,

@@ -15,19 +15,29 @@
   const colors = decode(scene.colors, Uint8Array);
   const covariance = scene.covariance && decode(scene.covariance, Float32Array);
   const density = scene.density && decode(scene.density, Float32Array);
+  const water = decode(scene.water, Uint8Array);
   const vertex = `
     attribute vec3 position; attribute vec3 color;
-    attribute vec3 covA; attribute vec3 covB; attribute float density;
+    attribute vec3 covA; attribute vec3 covB; attribute float density; attribute float water;
     uniform mat4 camera; uniform vec3 cameraRight; uniform vec3 cameraUp;
-    uniform float viewportHeight; uniform float maxPointSize;
-    varying vec3 vColor; varying vec3 vInverse; varying float vPointSize; varying float vDensity;
+    uniform float viewportHeight; uniform float maxPointSize; uniform float mirrorMode; uniform float waterY;
+    varying vec3 vColor; varying vec3 vInverse; varying float vPointSize; varying float vDensity; varying float vWater;
     float covarianceAlong(vec3 a, vec3 b) {
-      return a.x * b.x * covA.x + (a.x * b.y + a.y * b.x) * covA.y
-        + (a.x * b.z + a.z * b.x) * covA.z + a.y * b.y * covB.x
-        + (a.y * b.z + a.z * b.y) * covB.y + a.z * b.z * covB.z;
+      vec3 ca = mirrorMode > 0.5 ? vec3(a.x, -a.y, a.z) : a;
+      vec3 cb = mirrorMode > 0.5 ? vec3(b.x, -b.y, b.z) : b;
+      return ca.x * cb.x * covA.x + (ca.x * cb.y + ca.y * cb.x) * covA.y
+        + (ca.x * cb.z + ca.z * cb.x) * covA.z + ca.y * cb.y * covB.x
+        + (ca.y * cb.z + ca.z * cb.y) * covB.y + ca.z * cb.z * covB.z;
     }
     void main() {
-      vec4 p = camera * vec4(position, 1.0);
+      if (mirrorMode > 0.5 && position.y <= waterY + 0.03) {
+        gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
+        gl_PointSize = 1.0;
+        return;
+      }
+      vec3 point = position;
+      if (mirrorMode > 0.5) point.y = 2.0 * waterY - point.y;
+      vec4 p = camera * vec4(point, 1.0);
       gl_Position = p;
       float scale = viewportHeight * 0.5 * ${1 / Math.tan(Math.PI / 7)} / max(0.4, p.w);
       float a = max(0.0001, covarianceAlong(cameraRight, cameraRight) * scale * scale);
@@ -40,17 +50,26 @@
       vPointSize = gl_PointSize;
       vColor = color / 255.0;
       vDensity = density;
+      vWater = water;
     }
   `;
   const fragment = `
-    precision highp float; varying vec3 vColor; varying vec3 vInverse; varying float vPointSize; varying float vDensity;
+    precision highp float; varying vec3 vColor; varying vec3 vInverse; varying float vPointSize; varying float vDensity; varying float vWater;
+    uniform sampler2D reflectionMap; uniform vec2 viewportSize;
     void main() {
       vec2 q = (gl_PointCoord - 0.5) * vPointSize;
       q.y = -q.y;
       float distanceSquared = q.x * q.x * vInverse.x + 2.0 * q.x * q.y * vInverse.y + q.y * q.y * vInverse.z;
       if (vDensity < 1.0) {
         if (distanceSquared > 9.0) discard;
-        gl_FragColor = vec4(vColor, vDensity * exp(-0.5 * distanceSquared));
+        vec3 shade = vColor;
+        if (vWater > 0.5) {
+          vec2 uv = gl_FragCoord.xy / viewportSize;
+          uv += vec2(sin(gl_FragCoord.y * 0.07), sin(gl_FragCoord.x * 0.09)) * 0.0015;
+          vec4 reflected = texture2D(reflectionMap, uv);
+          shade = mix(shade, reflected.rgb, reflected.a * 0.7);
+        }
+        gl_FragColor = vec4(shade, vDensity * exp(-0.5 * distanceSquared));
       } else {
         if (distanceSquared > 6.25 + clamp(vDensity - 3.0, -1.0, 2.0) * 0.4) discard;
         gl_FragColor = vec4(vColor, 1.0);
@@ -68,6 +87,7 @@
     const attribute = gl.getAttribLocation(program, name); gl.enableVertexAttribArray(attribute); gl.vertexAttribPointer(attribute, size, type, false, 0, 0);
   };
   bind('position', positions, 3, gl.FLOAT); bind('color', colors, 3, gl.UNSIGNED_BYTE);
+  bind('water', water, 1, gl.UNSIGNED_BYTE);
   if (covariance && density) {
     const first = new Float32Array(scene.count * 3);
     const second = new Float32Array(scene.count * 3);
@@ -84,6 +104,10 @@
   const upLocation = gl.getUniformLocation(program, 'cameraUp');
   const heightLocation = gl.getUniformLocation(program, 'viewportHeight');
   const maxPointLocation = gl.getUniformLocation(program, 'maxPointSize');
+  const mirrorLocation = gl.getUniformLocation(program, 'mirrorMode');
+  const waterYLocation = gl.getUniformLocation(program, 'waterY');
+  const viewportSizeLocation = gl.getUniformLocation(program, 'viewportSize');
+  const reflectionLocation = gl.getUniformLocation(program, 'reflectionMap');
   const maxPointSize = gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE)[1];
   const initial = { yaw: scene.yaw ?? 0.08, pitch: scene.pitch ?? 0.18, distance: scene.distance, target: [...scene.target] };
   const state = { ...initial, target: [...initial.target] };
@@ -101,6 +125,32 @@
     for (let column = 0; column < 4; column++) for (let row = 0; row < 4; row++) for (let k = 0; k < 4; k++) out[column * 4 + row] += projection[k * 4 + row] * view[column * 4 + k];
     return out;
   };
+  const reflectionTexture = gl.createTexture();
+  const reflectionDepth = gl.createRenderbuffer();
+  const reflectionFrame = gl.createFramebuffer();
+  let reflectionWidth = 0, reflectionHeight = 0, reflectionReady = false;
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, reflectionTexture);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.uniform1i(reflectionLocation, 0);
+  const resizeReflection = (width, height) => {
+    if (width === reflectionWidth && height === reflectionHeight) return;
+    reflectionWidth = width;
+    reflectionHeight = height;
+    gl.bindTexture(gl.TEXTURE_2D, reflectionTexture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+    gl.bindRenderbuffer(gl.RENDERBUFFER, reflectionDepth);
+    gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, reflectionFrame);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, reflectionTexture, 0);
+    gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, reflectionDepth);
+    reflectionReady = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.bindTexture(gl.TEXTURE_2D, null);
+  };
   let renderQueued = false;
   const scheduleRender = () => {
     if (renderQueued) return;
@@ -112,9 +162,8 @@
     const ratio = Math.min(devicePixelRatio || 1, 2);
     const width = Math.round(innerWidth * ratio), height = Math.round(innerHeight * ratio);
     if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
+    resizeReflection(width, height);
     gl.viewport(0, 0, width, height);
-    gl.clearColor(.045, .105, .125, 1);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.enable(gl.DEPTH_TEST);
     gl.disable(gl.BLEND);
     gl.uniformMatrix4fv(matrixLocation, false, cameraMatrix());
@@ -123,6 +172,22 @@
     gl.uniform3f(upLocation, -sp * sy, cp, -sp * cy);
     gl.uniform1f(heightLocation, height);
     gl.uniform1f(maxPointLocation, maxPointSize);
+    gl.uniform1f(waterYLocation, scene.pond.waterY);
+    gl.uniform2f(viewportSizeLocation, width, height);
+    if (reflectionReady) {
+      gl.bindTexture(gl.TEXTURE_2D, null);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, reflectionFrame);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.uniform1f(mirrorLocation, 1);
+      gl.drawArrays(gl.POINTS, 0, scene.transparentStart);
+    }
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, reflectionReady ? reflectionTexture : null);
+    gl.clearColor(.045, .105, .125, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.uniform1f(mirrorLocation, 0);
     gl.drawArrays(gl.POINTS, 0, scene.transparentStart);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
