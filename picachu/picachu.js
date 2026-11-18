@@ -1,8 +1,8 @@
 // Gengar sculpted as pixel-art Gaussian splats. Render with:
-// node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render gengar.js --out gengar.png
+// node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render picachu.js --out picachu.png
 module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
-  id: 'gengar',
-  name: 'Gengar',
+  id: 'picachu',
+  name: 'Picachu',
   seed: 94,
   build(seed) {
     const B = makeBuilder(seed, [

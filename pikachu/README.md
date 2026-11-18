@@ -6,4 +6,4 @@ Apesar do nome, é o Gengar em versão detalhada: corpo único com membros fundi
 - `node export-scene.js`: regenera `scene-data.js`.
 - `pikachu.png`: render pixel-art do Ink Studio.
 
-A primeira versão continua em `../gengar/`.
+A primeira versão está em `../picachu/`.

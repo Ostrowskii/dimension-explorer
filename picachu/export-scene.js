@@ -5,7 +5,7 @@ const outputPath = path.resolve(__dirname, 'scene-data.js');
 
 const studioRoot = path.resolve(__dirname, '../../shapeshift-labs-ink-studio');
 const kit = require(path.join(studioRoot, 'index.js')).load();
-const scene = require('./gengar.js')(kit);
+const scene = require('./picachu.js')(kit);
 const world = scene.build(scene.seed);
 const positions = new Float32Array(world.count * 3);
 const colors = new Uint8Array(world.count * 3);
@@ -54,4 +54,4 @@ const output = `window.TOWER_SCENE = ${JSON.stringify({
   water: encoded(water)
 })};\n`;
 fs.writeFileSync(outputPath, output);
-console.log(`Exported ${world.count} splats to gengar/scene-data.js`);
+console.log(`Exported ${world.count} splats to picachu/scene-data.js`);
