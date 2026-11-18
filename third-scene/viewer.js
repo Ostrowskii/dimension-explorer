@@ -85,7 +85,7 @@
   const heightLocation = gl.getUniformLocation(program, 'viewportHeight');
   const maxPointLocation = gl.getUniformLocation(program, 'maxPointSize');
   const maxPointSize = gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE)[1];
-  const initial = { yaw: 0.08, pitch: 0.18, distance: scene.distance, target: [...scene.target] };
+  const initial = { yaw: scene.yaw ?? 0.08, pitch: scene.pitch ?? 0.18, distance: scene.distance, target: [...scene.target] };
   const state = { ...initial, target: [...initial.target] };
   const normalize = vector => { const length = Math.hypot(...vector) || 1; return vector.map(value => value / length); };
   const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];

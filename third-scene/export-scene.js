@@ -38,6 +38,8 @@ const output = `window.TOWER_SCENE = ${JSON.stringify({
   count: world.count,
   target: world.cam.target,
   distance: world.cam.dist,
+  pitch: world.cam.pitch,
+  yaw: world.cam.yaw,
   radius: world.radius,
   transparentStart,
   atmosphere: world.atmosphere,

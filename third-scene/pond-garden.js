@@ -147,7 +147,7 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
       }
     }
     return B.finish({
-      cam: { target: [-1.1, 3.4, 0], dist: 22, pitch: 0.18, yaw: 0.08, sway: 0.18 },
+      cam: { target: [-1.0, 3.1, -0.7], dist: 21, pitch: 0.42, yaw: 3.0, sway: 0.18 },
       atmosphere,
       detail: 15,
       palName: 'Woodland tower',
