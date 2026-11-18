@@ -12,6 +12,12 @@
 <style>
   .ghost { --gold: #c9a9ff; --panel: #17132a; --line: #352b55; --night: #0c0a14; }
   body.ghost, html:has(body.ghost) { background: #0c0a14; }
+  .clips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .clip { margin: 0; display: grid; gap: 10px; min-width: 0; }
+  .clip video { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 10px; border: 1px solid var(--line); background: #000; image-rendering: pixelated; }
+  .clip figcaption { display: grid; gap: 4px; color: var(--moss); font-size: .95rem; }
+  .clip figcaption strong { font-family: var(--display); font-weight: 500; font-size: 1.25rem; color: var(--cream); }
+  @media (max-width: 720px) { .clips { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body class="ghost">
@@ -41,6 +47,17 @@
       <img src="thumbs/pikachu.png" alt="Gengar detalhado com dentes triangulares sobre um chão liso" width="720" height="480">
       <div class="text"><span class="num">VERSÃO 2 · 96.156 SPLATS</span><h3>Pikachu</h3><p>Membros fundidos ao corpo com curvas suaves, dentes triangulares encaixados, olhos com contorno e brilho, chão liso.</p><span class="go">Explorar em 3D →</span></div>
     </a>
+  </section>
+
+  <section class="film" id="animacoes">
+    <h2>Animações</h2>
+    <p class="lead">Vídeos renderizados pelo Ink Studio, quadro a quadro. Um esqueleto simples move corpo, braços e pernas, e os efeitos são splats extras.</p>
+    <div class="clips">
+      <figure class="clip">
+        <video src="gengar-animacoes/shadow-ball.mp4" poster="gengar-animacoes/shadow-ball.png" controls muted loop playsinline preload="metadata"></video>
+        <figcaption><strong>Shadow Ball</strong>Flutua rindo, junta as mãos, carrega uma esfera de sombra e lança na câmera.</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="how">
