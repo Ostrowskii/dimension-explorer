@@ -4,25 +4,43 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dimension Explorer — Minha cena</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../panel.css" />
   </head>
   <body>
     <main>
       <canvas id="world" aria-label="Cena 3D interativa"></canvas>
       <section class="panel" aria-live="polite">
-        <p class="eyebrow">DIMENSION EXPLORER</p>
-        <h1>Minha cena</h1>
-        <nav class="scene-picker" aria-label="Navegação">
-          <a class="home-link" href="../index.html">← Início</a>
-          <a href="../como-fazer.html">Passo a passo</a>
-        </nav>
-        <p class="hint">Arraste para girar · Roda do mouse para aproximar · Botão direito para mover o foco</p>
-        <div class="controls">
-          <button id="reset" type="button">Restaurar visão</button>
-          <button id="front" type="button">Vista frontal</button>
-          <button id="top" type="button">Vista superior</button>
-        </div>
-        <p id="status">Carregando cena…</p>
+        <details open>
+          <summary>
+            <span class="titles"><a class="brand" href="../index.html">← Dimension Explorer</a><h1>Minha cena</h1></span>
+            <span class="toggle" aria-hidden="true"></span>
+          </summary>
+          <div class="panel-body">
+          <nav class="scene-picker" aria-label="Navegação">
+            <div class="group">
+              <span class="scene-label">Modelo</span>
+              <div class="chips">
+              <a href="../como-fazer.html">Passo a passo</a>
+              <a href="../index.html#cenas">Ver as cenas</a>
+              </div>
+            </div>
+          </nav>
+            <div class="group">
+              <span class="scene-label">Vista</span>
+              <div class="controls">
+                <button id="reset" type="button">Restaurar</button>
+                <button id="front" type="button">Frontal</button>
+                <button id="top" type="button">Superior</button>
+              </div>
+            </div>
+            <p class="hint"><kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco</p>
+            <p id="status">Carregando cena…</p>
+          </div>
+        </details>
       </section>
     </main>
     <script src="scene-data.js"></script>

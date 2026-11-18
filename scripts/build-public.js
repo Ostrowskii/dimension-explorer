@@ -6,13 +6,17 @@ const root = path.resolve(__dirname, '..');
 const out = path.join(root, 'public');
 const scenes = ['dist', 'next-scene', 'third-scene', 'fourth-scene'];
 const files = ['index.html', 'style.css', 'viewer.js', 'scene-data.js'];
+const panelCss = fs.readFileSync(path.join(root, 'panel.css'), 'utf8');
 fs.rmSync(out, { recursive: true, force: true });
 for (const scene of scenes) {
   fs.mkdirSync(path.join(out, scene), { recursive: true });
   for (const file of files) {
     let data = fs.readFileSync(path.join(root, scene, file));
     if (file === 'index.html') {
-      data = data.toString().split('\n').filter(line => !/>(Picachu|Pikachu)<\/a>|class="home-link"/.test(line)).join('\n');
+      data = data.toString()
+        .replace(/\s*<!-- fanart:start -->[\s\S]*?<!-- fanart:end -->/g, '')
+        .replace('<a class="brand" href="../index.html">← Dimension Explorer</a>', '<span class="brand">Dimension Explorer</span>')
+        .replace('<link rel="stylesheet" href="../panel.css" />', `<style>\n${panelCss}</style>`);
     }
     fs.writeFileSync(path.join(out, scene, file), data);
   }

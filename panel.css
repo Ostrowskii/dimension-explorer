@@ -1,0 +1,73 @@
+/* Painel das cenas 3D — mesmo visual da página inicial (home.css). Carregado depois do style.css de cada cena. */
+.panel {
+  --night: #0b171e;
+  --glass: #0d1d23e6;
+  --chip: #142a30;
+  --line: #2a4247;
+  --cream: #f2ead3;
+  --moss: #a9bdb4;
+  --gold: #e2c46e;
+  --display: "Pixelify Sans", "Courier New", monospace;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  position: fixed;
+  top: max(18px, env(safe-area-inset-top, 0px));
+  left: max(18px, env(safe-area-inset-left, 0px));
+  width: min(340px, calc(100vw - 36px));
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 50px #0009;
+  color: var(--cream);
+  font-family: var(--body);
+}
+.panel.ghost { --night: #0c0a14; --glass: #120f20e6; --chip: #1b1630; --line: #352b55; --gold: #c9a9ff; }
+
+.panel details > summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 16px;
+}
+.panel details > summary::-webkit-details-marker { display: none; }
+.panel details > summary:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; border-radius: 14px; }
+.panel .titles { display: grid; gap: 4px; min-width: 0; }
+.panel .brand {
+  font-family: var(--display); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); text-decoration: none; justify-self: start;
+}
+.panel .brand:hover, .panel .brand:focus-visible { text-decoration: underline; text-underline-offset: 3px; outline: none; }
+.panel h1 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.7rem; line-height: 1.05; letter-spacing: .01em; color: var(--cream); }
+.panel .toggle {
+  flex: none; width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line); background: var(--chip);
+  display: grid; place-items: center;
+}
+.panel .toggle::before { content: ""; width: 8px; height: 8px; border-right: 2px solid var(--moss); border-bottom: 2px solid var(--moss); transform: translateY(-2px) rotate(45deg); transition: transform .15s; }
+.panel details:not([open]) .toggle::before { transform: translateY(2px) rotate(-135deg); }
+.panel summary:hover .toggle { border-color: var(--gold); }
+
+.panel .panel-body { display: grid; gap: 14px; padding: 2px 16px 16px; border-top: 1px solid var(--line); padding-top: 14px; }
+.panel .group { display: grid; gap: 7px; }
+.panel .scene-picker { display: grid; gap: 12px; margin: 0; }
+.panel .scene-label { width: auto; font-family: var(--display); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--moss); }
+.panel .chips, .panel .controls { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.panel .chips a, .panel .controls button {
+  font: 500 .82rem/1 var(--body); color: var(--cream); text-decoration: none;
+  border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px; background: var(--chip); cursor: pointer;
+}
+.panel .chips a:hover, .panel .chips a:focus-visible, .panel .controls button:hover, .panel .controls button:focus-visible {
+  border-color: var(--gold); color: var(--gold); background: var(--chip); outline: none;
+}
+.panel .chips a[aria-current="page"] { background: var(--gold); border-color: var(--gold); color: var(--night); font-weight: 600; cursor: default; }
+
+.panel .hint { margin: 0; color: var(--moss); font-size: .8rem; line-height: 1.7; max-width: none; }
+.panel kbd { font-family: var(--display); font-size: .72rem; color: var(--cream); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; background: var(--chip); }
+.panel #status { margin: 0; display: flex; align-items: center; gap: 8px; color: var(--moss); font-size: .8rem; font-variant-numeric: tabular-nums; }
+.panel #status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); flex: none; }
+.panel .video-link { margin: 0; color: var(--gold); font-size: .85rem; font-weight: 600; text-underline-offset: 3px; }
+
+@media (max-width: 600px) {
+  .panel { top: max(10px, env(safe-area-inset-top, 0px)); left: max(10px, env(safe-area-inset-left, 0px)); width: calc(100vw - 20px); }
+  .panel h1 { font-size: 1.4rem; }
+}
+@media (prefers-reduced-motion: reduce) { .panel .toggle::before { transition: none; } }
