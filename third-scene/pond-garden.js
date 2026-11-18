@@ -24,8 +24,12 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
       const clearing = Math.exp(-(x * x + z * z) / 18) * 0.12;
       return hill - clearing - 0.12;
     };
-    const pond = { x: 0.75, z: -4.45, rx: 1.15, rz: 1.12 };
-    const pondRadius = (x, z) => Math.hypot((x - pond.x) / pond.rx, (z - pond.z) / pond.rz);
+    const pond = { x: 2.65, z: -4.45, rx: 1.85, rz: 1.75 };
+    const shoreShape = angle => 1 + 0.045 * Math.sin(angle * 3 + 0.6) + 0.035 * Math.sin(angle * 7 - 0.4);
+    const pondRadius = (x, z) => {
+      const nx = (x - pond.x) / pond.rx, nz = (z - pond.z) / pond.rz;
+      return Math.hypot(nx, nz) / shoreShape(Math.atan2(nz, nx));
+    };
     const waterY = height(pond.x, pond.z) + 0.04;
     S.ground(grass, { h: height, rad: 9, zs: 1.15, edge: 0.06, res: 0.14, keep: (x, z) => pondRadius(x, z) > 1.01 });
 
@@ -54,6 +58,7 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
     for (let i = 0; i < 23; i++) {
       const a = B.R() * Math.PI * 2, r = 2.1 + B.R() * 5.7;
       const x = Math.cos(a) * r, z = Math.sin(a) * r;
+      if (pondRadius(x, z) < 1.12) continue;
       S.ball([x, height(x, z) + 0.08, z], [0.12 + B.R() * 0.18, 0.09 + B.R() * 0.1, 0.12 + B.R() * 0.16], darkStone, { res: 0.065 });
     }
 
@@ -112,17 +117,18 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
     }
 
     // A low, irregular stone bank frames the water without crossing the sunlit ground nearby.
-    for (let i = 0; i < 74; i++) {
-      const angle = i * Math.PI * 2 / 74;
-      const x = pond.x + Math.cos(angle) * pond.rx * (1.02 + B.R() * 0.09);
-      const z = pond.z + Math.sin(angle) * pond.rz * (1.02 + B.R() * 0.09);
+    for (let i = 0; i < 116; i++) {
+      const angle = i * Math.PI * 2 / 116;
+      const bank = shoreShape(angle) * (1.03 + B.R() * 0.07);
+      const x = pond.x + Math.cos(angle) * pond.rx * bank;
+      const z = pond.z + Math.sin(angle) * pond.rz * bank;
       S.ball([x, height(x, z) + 0.03, z], [0.11 + B.R() * 0.11, 0.05 + B.R() * 0.04, 0.11 + B.R() * 0.12], stone, { res: 0.07 });
     }
 
     S.bake();
     // The viewer captures a planar reflection and shows it only on these water splats.
-    for (let z = pond.z - pond.rz; z <= pond.z + pond.rz; z += 0.085) {
-      for (let x = pond.x - pond.rx; x <= pond.x + pond.rx; x += 0.085) {
+    for (let z = pond.z - pond.rz * 1.1; z <= pond.z + pond.rz * 1.1; z += 0.085) {
+      for (let x = pond.x - pond.rx * 1.1; x <= pond.x + pond.rx * 1.1; x += 0.085) {
         const edge = pondRadius(x, z);
         if (edge >= 0.99) continue;
         const ripple = Math.sin(x * 12 + z * 5) + Math.sin(z * 14 - x * 3);
