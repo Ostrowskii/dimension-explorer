@@ -110,7 +110,7 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
         const x = from[0] + (to[0] - from[0]) * t + Math.cos(angle) * radius;
         const y = from[1] + (to[1] - from[1]) * t;
         const z = from[2] + (to[2] - from[2]) * t + Math.sin(angle) * radius;
-        B.dab(x, y, z, [0, 0, 1], [1, 0, 0], 0.13, 0.13, 0.13, [240, 202, 114], 0.08 + (1 - t) * 0.07, { em: true });
+        B.dab(x, y, z, [0, 0, 1], [1, 0, 0], 0.13, 0.13, 0.13, [240, 202, 114], 0.025 + (1 - t) * 0.025, { em: true });
       }
     }
     return B.finish({
