@@ -197,7 +197,7 @@
   };
   let drag = null;
   canvas.addEventListener('pointerdown', event => { drag = { x: event.clientX, y: event.clientY, button: event.button }; canvas.setPointerCapture(event.pointerId); });
-  canvas.addEventListener('pointermove', event => { if (!drag) return; const dx = event.clientX - drag.x, dy = event.clientY - drag.y; drag.x = event.clientX; drag.y = event.clientY; if (drag.button === 2) { state.target[0] -= dx * state.distance / 950; state.target[1] += dy * state.distance / 950; } else { state.yaw -= dx * .008; state.pitch = Math.max(-1.35, Math.min(1.35, state.pitch - dy * .008)); } if (dx || dy) scheduleRender(); });
+  canvas.addEventListener('pointermove', event => { if (!drag) return; const dx = event.clientX - drag.x, dy = event.clientY - drag.y; drag.x = event.clientX; drag.y = event.clientY; if (drag.button === 2) { state.target[0] -= dx * state.distance / 950; state.target[1] += dy * state.distance / 950; } else { state.yaw -= dx * .008; state.pitch = Math.max(-1.35, Math.min(1.35, state.pitch + dy * .008)); } if (dx || dy) scheduleRender(); });
   canvas.addEventListener('pointerup', () => { drag = null; });
   canvas.addEventListener('wheel', event => { event.preventDefault(); state.distance = Math.max(4, Math.min(35, state.distance * Math.exp(event.deltaY * .001))); scheduleRender(); }, { passive: false });
   canvas.addEventListener('contextmenu', event => event.preventDefault());
