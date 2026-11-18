@@ -83,13 +83,18 @@ module.exports = ({ makeBuilder, makeSculpt, KIT: K }) => ({
       [2.15, 5.25, 0.35, 0.95, 0.7, 0.75], [-0.45, 7.25, -0.45, 1.1, 0.65, 0.85]
     ]) S.ball(treePoint(dx, dy, dz), [rx * treeScale, ry * treeScale, rz * treeScale], goldLeaves, { res: 0.13 });
 
-    // Light shafts pass through the branches and land on the flowered clearing.
-    const shafts = [
-      [treePoint(0.4, 6.25, 0.6), [-1.9, height(-1.9, 2.7) + 0.1, 2.7]],
-      [treePoint(1.1, 5.9, 0.8), [-0.8, height(-0.8, 3.3) + 0.1, 3.3]],
-      [treePoint(-0.8, 6.3, 0.7), [-3.1, height(-3.1, 3.7) + 0.1, 3.7]],
-      [treePoint(1.7, 5.25, 0.6), [0.0, height(0, 4.2) + 0.1, 4.2]]
-    ];
+    // Parallel sunlight enters through nearby gaps in the crown.
+    const sunDirection = [0.36, -1, 0.42];
+    const sunlightStart = [-0.7, -0.25, 0.25, 0.7].map(dx => treePoint(dx, 6.8, 0.7));
+    const shafts = sunlightStart.map(from => {
+      let travel = from[1];
+      for (let i = 0; i < 3; i++) {
+        const x = from[0] + sunDirection[0] * travel;
+        const z = from[2] + sunDirection[2] * travel;
+        travel = from[1] - height(x, z) - 0.1;
+      }
+      return [from, [from[0] + sunDirection[0] * travel, from[1] - travel, from[2] + sunDirection[2] * travel]];
+    });
     const atmosphere = shafts.map(([from, to]) => K.atmosphere.shaft({ from, to, radius: 0.38, density: 0.18, color: '#f0ca72' }));
 
     // Low shrubs and small flowers around the clearing.
