@@ -1,0 +1,79 @@
+/* Layout: one night-forest column; scene cards in a 2-up grid, then the film, then how it is made. Single dark look, like the scenes. */
+:root {
+  --night: #0b171e;
+  --panel: #12252b;
+  --line: #2a4247;
+  --cream: #f2ead3;
+  --moss: #a9bdb4;
+  --gold: #e2c46e;
+  --display: "Pixelify Sans", "Courier New", monospace;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+html { background: var(--night); }
+body { background: var(--night); color: var(--cream); font-family: var(--body); font-size: 16px; line-height: 1.55; }
+.wrap {
+  max-width: 1040px; margin: 0 auto;
+  padding-block: 48px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 56px;
+}
+.eyebrow { font-family: var(--display); color: var(--gold); letter-spacing: .14em; font-size: .85rem; text-transform: uppercase; margin: 0; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(2.4rem, 7vw, 4.2rem); line-height: 1; letter-spacing: .01em; }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: 1.35rem; font-weight: 500; }
+p { margin: 0; }
+.lead { max-width: 62ch; color: var(--moss); font-size: 1.08rem; }
+header { display: grid; gap: 16px; }
+.hint { color: var(--moss); font-size: .9rem; }
+.hint kbd { font-family: var(--display); color: var(--cream); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; font-size: .85rem; }
+
+.scenes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.scene {
+  display: grid; grid-template-rows: auto 1fr; text-decoration: none; color: inherit;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+  transition: border-color .15s, transform .15s;
+}
+.scene:hover, .scene:focus-visible { border-color: var(--gold); transform: translateY(-2px); outline: none; }
+.scene img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; image-rendering: pixelated; background: var(--night); }
+.scene .text { display: grid; gap: 6px; padding: 16px 18px 18px; align-content: start; }
+.scene .num { font-family: var(--display); color: var(--gold); font-size: .8rem; letter-spacing: .12em; }
+.scene p { color: var(--moss); font-size: .95rem; }
+.scene .go { color: var(--gold); font-size: .9rem; font-weight: 600; margin-top: 4px; }
+
+.film { display: grid; gap: 16px; }
+.film video { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; border: 1px solid var(--line); background: #000; image-rendering: pixelated; }
+
+.how { display: grid; gap: 20px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: step; }
+.steps li { border-top: 2px solid var(--gold); padding-top: 14px; display: grid; gap: 6px; min-width: 0; }
+.steps li::before { counter-increment: step; content: "Passo " counter(step); font-family: var(--display); color: var(--gold); font-size: .8rem; letter-spacing: .12em; }
+.steps strong { font-weight: 600; }
+.steps p { color: var(--moss); font-size: .95rem; }
+code { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: .88em; color: var(--cream); background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
+
+footer { border-top: 1px solid var(--line); padding-top: 20px; color: var(--moss); font-size: .88rem; display: grid; gap: 6px; }
+footer a { color: var(--gold); }
+
+.topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
+.brand { font-family: var(--display); color: var(--gold); letter-spacing: .14em; font-size: .85rem; text-transform: uppercase; text-decoration: none; }
+.menu { display: flex; flex-wrap: wrap; gap: 8px; }
+.menu a {
+  font-size: .9rem; font-weight: 500; color: var(--cream); text-decoration: none;
+  border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; background: var(--panel);
+}
+.menu a:hover, .menu a:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+.menu a.feature { border-color: var(--gold); color: var(--gold); }
+.menu a[aria-current="page"] { background: var(--gold); border-color: var(--gold); color: var(--night); }
+section[id] { scroll-margin-top: 24px; }
+html { scroll-behavior: smooth; }
+.back { color: var(--gold); font-weight: 600; text-decoration: none; }
+.back:hover, .back:focus-visible { text-decoration: underline; }
+
+@media (max-width: 720px) {
+  .scenes, .steps { grid-template-columns: minmax(0, 1fr); }
+  .wrap { padding-block: 32px 48px; gap: 44px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .scene { transition: none; } .scene:hover { transform: none; } }

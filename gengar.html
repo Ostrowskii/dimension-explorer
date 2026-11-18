@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gengar em splats</title>
+<meta name="description" content="Fan art do Gengar esculpida em Gaussian splats e explorável em 3D.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="home.css">
+<style>
+  .ghost { --gold: #c9a9ff; --panel: #17132a; --line: #352b55; --night: #0c0a14; }
+  body.ghost, html:has(body.ghost) { background: #0c0a14; }
+</style>
+</head>
+<body class="ghost">
+<div class="wrap">
+  <nav class="topbar" aria-label="Navegação">
+    <a class="brand" href="index.html">Dimension Explorer</a>
+    <div class="menu">
+      <a href="index.html#cenas">Cenas</a>
+      <a href="index.html#filme">Filme</a>
+      <a href="index.html#como-e-feito">Como é feito</a>
+      <a href="gengar.html" aria-current="page">Gengar</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Gengar, em splats</h1>
+    <p class="lead">Fan art feita com a mesma técnica das cenas da torre. O corpo, as orelhas e os espinhos são formas esculpidas; os olhos e o sorriso são pintados direto na superfície. Duas versões, para comparar o antes e o depois.</p>
+    <p class="hint"><kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco</p>
+  </header>
+
+  <section class="scenes" aria-label="Versões do Gengar">
+    <a class="scene" href="picachu/index.html">
+      <img src="thumbs/picachu.png" alt="Gengar roxo sorrindo sobre um chão de grama escura" width="720" height="480">
+      <div class="text"><span class="num">VERSÃO 1 · 25.424 SPLATS</span><h3>Picachu</h3><p>Primeira versão: peças encaixadas, sorriso com grade de dentes e chão de grama com pedras.</p><span class="go">Explorar em 3D →</span></div>
+    </a>
+    <a class="scene" href="pikachu/index.html">
+      <img src="thumbs/pikachu.png" alt="Gengar detalhado com dentes triangulares sobre um chão liso" width="720" height="480">
+      <div class="text"><span class="num">VERSÃO 2 · 96.156 SPLATS</span><h3>Pikachu</h3><p>Membros fundidos ao corpo com curvas suaves, dentes triangulares encaixados, olhos com contorno e brilho, chão liso.</p><span class="go">Explorar em 3D →</span></div>
+    </a>
+  </section>
+
+  <section class="how">
+    <h2>O que mudou da versão 1 para a 2</h2>
+    <ol class="steps">
+      <li><strong>Peças fundidas</strong><p>Orelhas, espinhos, braços e pernas viram um sólido só com <code>S.join('round', …)</code>, sem emendas.</p></li>
+      <li><strong>Mais resolução</strong><p>A amostragem passou de <code>res 0.045</code> para <code>0.026</code>: quase quatro vezes mais splats no corpo.</p></li>
+      <li><strong>Rosto pintado</strong><p>Uma função <code>tex</code> escolhe a cor de cada ponto da pele: contorno, pupila, brilho e dentes em zigue-zague.</p></li>
+    </ol>
+  </section>
+
+  <footer>
+    <p><a class="back" href="index.html">← Voltar para todas as cenas</a></p>
+    <p>Gengar é um personagem de Pokémon, © Nintendo / Creatures / GAME FREAK / The Pokémon Company. Fan art sem fins comerciais, não afiliada.</p>
+  </footer>
+</div>
+</body>
+</html>

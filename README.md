@@ -4,6 +4,8 @@ Cenas 3D em pixel-art que você gira com o mouse no navegador. Cada cena é escr
 
 As cenas são geradas com o motor procedural **[Ink Studio](https://github.com/siliconjungle/shapeshift-labs-ink-studio)** (licença MIT). Ele não é IA generativa: você descreve formas, cores e luz em código, e ele calcula os splats.
 
+**Ver online:** https://ostrowskii.github.io/dimension-explorer/
+
 ## Cenas
 
 | Pasta | Projeto | O que tem |
@@ -14,6 +16,8 @@ As cenas são geradas com o motor procedural **[Ink Studio](https://github.com/s
 | `fourth-scene/` | Filme | Versão mais detalhada + vídeo `orbit.mp4` com a câmera girando |
 | `picachu/` | Picachu | Gengar (primeira versão), com chão de grama |
 | `pikachu/` | Pikachu | Gengar detalhado, com chão liso |
+
+Os dois Gengar ficam numa tela própria, `gengar.html`, separada da página inicial.
 
 Torre, Árvore e Lago estão **congeladas**: o `export-scene.js` delas se recusa a sobrescrever os dados.
 
@@ -116,7 +120,7 @@ node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render minha-cena.js --o
 node export-scene.js          # cria minha-cena/scene-data.js
 ```
 
-Edite `minha-cena/index.html` (título, `<h1>`, seletor de projetos) e adicione um link para `minha-cena/index.html` no `index.html` da raiz e no seletor das outras cenas. Abra no Chrome e recarregue com `Ctrl+Shift+R` a cada mudança.
+Edite `minha-cena/index.html` (título, `<h1>`, seletor de projetos) e adicione um link para `minha-cena/index.html` no seletor das outras cenas. Na página inicial (`index.html`), copie um dos cartões `<a class="scene">` e gere a imagem de prévia em `thumbs/` (uma captura de tela da cena, 720×480). Abra no Chrome e recarregue com `Ctrl+Shift+R` a cada mudança.
 
 ### 6. Salve e congele
 
@@ -140,6 +144,11 @@ if (fs.existsSync(outputPath)) { console.error('Cena arquivada.'); process.exit(
 ```bash
 cd fourth-scene && node render-video.js
 ```
+
+### 8. Publicar
+
+- **GitHub Pages:** cada `git push` para a branch `main` atualiza o site em poucos minutos.
+- **Versão sem fan art:** `node scripts/build-public.js` gera `public/` só com as quatro cenas da torre (e a página inicial sem o menu do Gengar), usada no link publicado pelo Claude.
 
 ## Como funciona por dentro
 
