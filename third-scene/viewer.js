@@ -152,6 +152,9 @@
     gl.bindTexture(gl.TEXTURE_2D, null);
   };
   let renderQueued = false;
+  let drag = null;
+  let zooming = false;
+  let wheelRestoreTimer = null;
   const scheduleRender = () => {
     if (renderQueued) return;
     renderQueued = true;
@@ -159,7 +162,8 @@
   };
   const render = () => {
     renderQueued = false;
-    const ratio = Math.min(devicePixelRatio || 1, 2);
+    const fullRatio = Math.min(devicePixelRatio || 1, 2);
+    const ratio = drag || zooming ? Math.max(0.75, fullRatio * 0.6) : fullRatio;
     const width = Math.round(innerWidth * ratio), height = Math.round(innerHeight * ratio);
     if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
     resizeReflection(width, height);
@@ -195,11 +199,19 @@
     gl.drawArrays(gl.POINTS, scene.transparentStart, scene.count - scene.transparentStart);
     gl.depthMask(true);
   };
-  let drag = null;
   canvas.addEventListener('pointerdown', event => { drag = { x: event.clientX, y: event.clientY, button: event.button }; canvas.setPointerCapture(event.pointerId); });
   canvas.addEventListener('pointermove', event => { if (!drag) return; const dx = event.clientX - drag.x, dy = event.clientY - drag.y; drag.x = event.clientX; drag.y = event.clientY; if (drag.button === 2) { state.target[0] -= dx * state.distance / 950; state.target[1] += dy * state.distance / 950; } else { state.yaw -= dx * .008; state.pitch = Math.max(-1.35, Math.min(1.35, state.pitch + dy * .008)); } if (dx || dy) scheduleRender(); });
-  canvas.addEventListener('pointerup', () => { drag = null; });
-  canvas.addEventListener('wheel', event => { event.preventDefault(); state.distance = Math.max(4, Math.min(35, state.distance * Math.exp(event.deltaY * .001))); scheduleRender(); }, { passive: false });
+  const stopDragging = () => { if (drag) { drag = null; scheduleRender(); } };
+  canvas.addEventListener('pointerup', stopDragging);
+  canvas.addEventListener('pointercancel', stopDragging);
+  canvas.addEventListener('wheel', event => {
+    event.preventDefault();
+    state.distance = Math.max(4, Math.min(35, state.distance * Math.exp(event.deltaY * .001)));
+    zooming = true;
+    clearTimeout(wheelRestoreTimer);
+    wheelRestoreTimer = setTimeout(() => { zooming = false; scheduleRender(); }, 180);
+    scheduleRender();
+  }, { passive: false });
   canvas.addEventListener('contextmenu', event => event.preventDefault());
   window.addEventListener('resize', scheduleRender);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) scheduleRender(); });
