@@ -1,5 +1,5 @@
-# Próxima cena 3D
+# Torre e árvore dourada
 
-Esta pasta está reservada para a próxima cena explorável. Sua fonte, seus dados e seu visualizador ficarão aqui, separados da torre preservada em `../dist/`.
+Nova cena explorável: torre de pedra, telhado, janelas, árvores, arbustos, flores, pedras e caminho, com uma árvore antiga da altura da torre e feixes de luz dourada. Não há personagens.
 
-Tema e composição: a definir.
+Abra `index.html` no navegador. Para alterar a composição, edite `tree-garden.js` e rode `node export-scene.js` nesta pasta. A geração usa o motor procedural irmão `../../shapeshift-labs-ink-studio`; a visualização pronta funciona sem ele. A torre anterior permanece preservada em `../dist/`.
