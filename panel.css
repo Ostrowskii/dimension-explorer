@@ -12,6 +12,7 @@ body.de {
   --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   font-family: var(--body);
 }
+body.de.electric { --gold: #f6d03c; }
 body.de.ghost { --night: #0c0a14; --glass: #120f20e6; --chip: #1b1630; --line: #352b55; --gold: #c9a9ff; }
 
 /* ---------- barra do modo ---------- */

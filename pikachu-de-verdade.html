@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pikachu · Splat Gallery</title>
+<meta name="description" content="Fan art do Pikachu esculpida em Gaussian splats e explorável em 3D.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="home.css">
+<style>
+  .electric { --gold: #f6d03c; }
+  .hero-card { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 0; }
+  .hero-card img { aspect-ratio: auto; height: 100%; }
+  .hero-card .text { padding: 22px 24px; gap: 10px; align-content: center; }
+  .hero-card h3 { font-size: 1.8rem; }
+  .facts { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; color: var(--moss); font-size: .93rem; }
+  .facts b { color: var(--cream); font-weight: 600; }
+  .soon { border: 1px dashed var(--line); border-radius: 10px; padding: 22px; color: var(--moss); display: grid; gap: 6px; }
+  .soon strong { font-family: var(--display); font-weight: 500; color: var(--cream); font-size: 1.2rem; }
+  @media (max-width: 720px) { .hero-card { grid-template-columns: minmax(0, 1fr); } .hero-card img { aspect-ratio: 3 / 2; } }
+</style>
+</head>
+<body class="electric">
+<div class="wrap">
+  <nav class="topbar" aria-label="Navegação">
+    <a class="brand" href="index.html">Splat Gallery</a>
+    <div class="menu">
+      <a href="index.html#cenas">Cenas</a>
+      <a href="index.html#filme">Filme</a>
+      <a href="como-fazer.html">Como é feito</a>
+      <a href="gengar.html">Gengar</a>
+      <a href="pikachu-de-verdade.html" aria-current="page">Pikachu</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Pikachu, em splats</h1>
+    <p class="lead">Fan art feita com a mesma técnica do Gengar detalhado: corpo, cabeça, orelhas, braços, pés e rabo fundidos num sólido só, com o rosto e as marcas pintados direto na superfície.</p>
+    <p class="hint">Entre no <strong>Dimension Explorer</strong>, o modo 3D: <kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco · <kbd>Esc</kbd> sai</p>
+  </header>
+
+  <section aria-label="Pikachu">
+    <a class="scene hero-card" id="pikachu-de-verdade" href="pikachu-de-verdade/index.html">
+      <img src="thumbs/pikachu-de-verdade.png" alt="Pikachu amarelo com bochechas vermelhas e rabo de raio, sobre um gramado com flores" width="720" height="480">
+      <div class="text">
+        <span class="num">35.950 SPLATS · RES 0,026</span>
+        <h3>Pikachu de verdade</h3>
+        <ul class="facts">
+          <li><b>Rabo de raio:</b> um contorno 2D em zigue-zague extrudado com <code>S.extrude</code>, de pé atrás do corpo.</li>
+          <li><b>Rosto pintado:</b> olhos com brilho, nariz, boca em “ω” e bochechas vermelhas, tudo com <code>tex</code>.</li>
+          <li><b>Marcas:</b> pontas pretas nas orelhas, duas listras nas costas e a base marrom do rabo.</li>
+          <li><b>Junção suave:</b> <code>S.join('round')</code> com raio 0,1 une todas as peças.</li>
+        </ul>
+        <span class="go">◈ Entrar no Dimension Explorer</span>
+      </div>
+    </a>
+  </section>
+
+  <section class="film" id="animacoes">
+    <h2>Animações</h2>
+    <div class="soon"><strong>Em breve</strong>Duas animações do Pikachu, feitas com o mesmo esqueleto das animações do Gengar.</div>
+  </section>
+
+  <footer>
+    <p><a class="back" href="index.html">← Voltar para todas as cenas</a></p>
+    <p>Pikachu é um personagem de Pokémon, © Nintendo / Creatures / GAME FREAK / The Pokémon Company. Fan art sem fins comerciais, não afiliada.</p>
+  </footer>
+</div>
+<script>
+  // Lembra de onde a pessoa entrou no Dimension Explorer, para o botão Sair voltar ao mesmo cartão.
+  document.querySelectorAll('a.scene').forEach(card => card.addEventListener('click', () => {
+    try {
+      sessionStorage.setItem('splat-gallery-return', location.href.split('#')[0] + '#' + card.id);
+      sessionStorage.setItem('splat-gallery-entering', '1');
+    } catch (error) { /* sem armazenamento: o Sair usa o histórico do navegador */ }
+  }));
+</script>
+</body>
+</html>

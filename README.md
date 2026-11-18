@@ -18,6 +18,7 @@ O site se chama **Splat Gallery**. **Dimension Explorer** é o nome deste projet
 | `fourth-scene/` | Filme | Versão mais detalhada + vídeo `orbit.mp4` com a câmera girando |
 | `picachu/` | Picachu | Gengar (primeira versão), com chão de grama |
 | `pikachu/` | Pikachu | Gengar detalhado, com chão liso |
+| `pikachu-de-verdade/` | Pikachu ⚡ | Pikachu de verdade, com rabo de raio extrudado (página `pikachu-de-verdade.html`) |
 
 Os dois Gengar ficam numa tela própria, `gengar.html`, separada da página inicial.
 
