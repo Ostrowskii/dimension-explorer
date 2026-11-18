@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Visualizador 3D local da torre no bosque." />
+    <title>Dimension Explorer — Torre no bosque</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <canvas id="world" aria-label="Cena 3D interativa da torre no bosque"></canvas>
+      <section class="panel" aria-live="polite">
+        <p class="eyebrow">DIMENSION EXPLORER</p>
+        <h1>Torre no bosque</h1>
+        <p class="hint">Arraste para girar · Roda do mouse para aproximar · Botão direito para mover o foco</p>
+        <div class="controls">
+          <button id="reset" type="button">Restaurar visão</button>
+          <button id="front" type="button">Vista frontal</button>
+          <button id="top" type="button">Vista superior</button>
+        </div>
+        <p id="status">Carregando cena…</p>
+      </section>
+    </main>
+    <script src="scene-data.js"></script>
+    <script src="viewer.js"></script>
+  </body>
+</html>

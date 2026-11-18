@@ -1,0 +1,9 @@
+{
+  "name": "dimension-explorer",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local interactive viewer for the Ink Studio tower scene",
+  "scripts": {
+    "build:scene": "node scripts/export-scene.js"
+  }
+}
