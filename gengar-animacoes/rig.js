@@ -70,43 +70,47 @@ const segDist = (p, a, b) => {
   return V.len(V.sub(p, V.add(a, V.mul(ab, t))));
 };
 
-// Monta a cena do Gengar (com a paleta estendida para os efeitos) e devolve o boneco pronto para animar.
-function load({ extraPalette = [], fx, flatFloor = false } = {}) {
+// Classificação padrão (Gengar): ossos de braço e perna por distância a cápsulas, fora do elipsoide do corpo.
+const gengarClassify = (p, { hex, basePalette }) => {
+  if (p[1] < 0.03 && (hex === basePalette[13] || hex === basePalette[14])) return { part: -1 };
+  const e = Math.hypot((p[0] - C[0]) / RADII[0], (p[1] - C[1]) / RADII[1], (p[2] - C[2]) / RADII[2]);
+  const outside = smooth((e - 0.98) / 0.16);
+  let best = 0, bestW = 0;
+  Object.keys(BONES).forEach((name, k) => {
+    const bone = BONES[name];
+    const w = (1 - smooth((segDist(p, bone.a, bone.b) - bone.r) / 0.15)) * outside;
+    if (w > bestW) { bestW = w; best = k + 1; }
+  });
+  return { part: bestW > 0.01 ? best : 0, weight: bestW };
+};
+
+// Monta a cena (padrão: o Gengar detalhado), com a paleta estendida para os efeitos, e devolve o boneco pronto para animar.
+//   scene:    caminho do arquivo da cena
+//   bones:    nomes dos ossos, na ordem das partes devolvidas por classify (parte 1 = bones[0] …)
+//   classify: (posição, { hex, basePalette }) → { part: -1 chão parado | 0 corpo | 1..n osso, weight: 0..1 }
+function load({ extraPalette = [], fx, flatFloor = false, scene: sceneFile = path.resolve(__dirname, '../pikachu/pikachu.js'), bones: boneNames = Object.keys(BONES), classify = gengarClassify } = {}) {
   let basePalette = null;
   const wrapped = Object.assign({}, kit, {
     makeBuilder: (seed, pal) => { basePalette = pal; return kit.makeBuilder(seed, [...pal, ...extraPalette]); }
   });
-  const scene = require(path.resolve(__dirname, '../pikachu/pikachu.js'))(wrapped);
+  const scene = require(sceneFile)(wrapped);
   const world = scene.build(scene.seed);
   const palette = [...basePalette, ...extraPalette];
-  const floor = new Set([basePalette[13], basePalette[14]].map(h => h));
 
   const N = world.count;
   const base = Float32Array.from(world.data);
   // peso de cada parte por splat; o chão fica parado
-  const part = new Int8Array(N); // -1 chão, 0 corpo, 1..4 osso dominante
+  const part = new Int8Array(N); // -1 chão, 0 corpo, 1..n osso dominante
   const weight = new Float32Array(N);
-  const names = Object.keys(BONES);
+  const names = boneNames;
   for (let i = 0; i < N; i++) {
     const q = i * 16, p = [base[q], base[q + 1], base[q + 2]];
     const rgb = base[q + 7] | 0, hex = ((rgb & 255) << 16) | (rgb & 0xff00) | ((rgb >>> 16) & 255);
-    if (p[1] < 0.03 && floor.has(hex)) {
-      part[i] = -1;
-      // chão liso: tira a sombra fixa do Gengar parado (as animações desenham a sombra que se move)
-      if (flatFloor) { const h = basePalette[14]; base[q + 7] = ((h >> 16) & 255) | (h & 0xff00) | ((h & 255) << 16); }
-      continue;
-    }
-    const e = Math.hypot((p[0] - C[0]) / RADII[0], (p[1] - C[1]) / RADII[1], (p[2] - C[2]) / RADII[2]);
-    const outside = smooth((e - 0.98) / 0.16);
-    let best = 0, bestW = 0;
-    names.forEach((name, k) => {
-      const bone = BONES[name];
-      const near = 1 - smooth((segDist(p, bone.a, bone.b) - bone.r) / 0.15);
-      const w = near * outside;
-      if (w > bestW) { bestW = w; best = k + 1; }
-    });
-    part[i] = bestW > 0.01 ? best : 0;
-    weight[i] = bestW;
+    const c = classify(p, { hex, basePalette });
+    part[i] = c.part;
+    weight[i] = c.weight || 0;
+    // chão liso: tira a sombra fixa do personagem parado (as animações desenham a sombra que se move)
+    if (c.part === -1 && flatFloor) { const h = basePalette[14]; base[q + 7] = ((h >> 16) & 255) | (h & 0xff00) | ((h & 255) << 16); }
   }
 
   // Efeitos extras: cada grupo é montado numa cena própria e vira linhas acrescentadas ao mundo.
@@ -193,8 +197,8 @@ function transformCov(M, src, s, out, d) {
 }
 
 // Renderiza todos os quadros e junta em MP4.
-function film({ name, seconds, fps = 15, frame, camera, preview = [] }) {
-  const dir = path.join(__dirname, `frames-${name}`);
+function film({ name, seconds, fps = 15, frame, camera, preview = [], outDir = __dirname }) {
+  const dir = path.join(outDir, `frames-${name}`);
   fs.mkdirSync(dir, { recursive: true });
   const count = Math.round(seconds * fps);
   const only = process.argv.includes('--preview') ? preview.map(s => Math.round(s * fps)) : null;
@@ -208,12 +212,12 @@ function film({ name, seconds, fps = 15, frame, camera, preview = [] }) {
     if (i % fps === 0) console.log(`${name}: ${i + 1}/${count}`);
   }
   if (only) return console.log(`prévias em ${dir}`);
-  const mp4 = path.join(__dirname, `${name}.mp4`);
+  const mp4 = path.join(outDir, `${name}.mp4`);
   const result = spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(fps), '-i', path.join(dir, 'frame-%04d.png'),
     '-vf', 'scale=960:540:flags=neighbor', '-c:v', 'libx264', '-preset', 'medium', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', mp4], { stdio: 'inherit' });
   if (result.status !== 0) process.exit(result.status || 1);
-  spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', path.join(dir, `frame-${String(Math.round(count * 0.55)).padStart(4, '0')}.png`), '-vf', 'scale=960:540:flags=neighbor', path.join(__dirname, `${name}.png`)]);
-  console.log(`vídeo pronto: gengar-animacoes/${name}.mp4`);
+  spawnSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', path.join(dir, `frame-${String(Math.round(count * 0.55)).padStart(4, '0')}.png`), '-vf', 'scale=960:540:flags=neighbor', path.join(outDir, `${name}.png`)]);
+  console.log(`vídeo pronto: ${path.relative(path.resolve(__dirname, '..'), mp4)}`);
 }
 
-module.exports = { kit, load, film, V, I3, mm, axisAngle, rotX, rotY, rotZ, scale3, turnToward, affine, compose, IDENTITY, BONES, C, smooth, span, clamp01, easeOutBack };
+module.exports = { kit, load, film, V, I3, mm, axisAngle, rotX, rotY, rotZ, scale3, turnToward, affine, compose, apply, IDENTITY, BONES, C, smooth, span, clamp01, easeOutBack, segDist };

@@ -20,6 +20,22 @@
   .soon { border: 1px dashed var(--line); border-radius: 10px; padding: 22px; color: var(--moss); display: grid; gap: 6px; }
   .soon strong { font-family: var(--display); font-weight: 500; color: var(--cream); font-size: 1.2rem; }
   @media (max-width: 720px) { .hero-card { grid-template-columns: minmax(0, 1fr); } .hero-card img { aspect-ratio: 3 / 2; } }
+  .clips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .clip { margin: 0; display: grid; gap: 10px; min-width: 0; align-content: start; }
+  .clip video { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 10px; border: 1px solid var(--line); background: #000; image-rendering: pixelated; }
+  .clip figcaption { display: grid; gap: 4px; color: var(--moss); font-size: .95rem; }
+  .clip figcaption strong { font-family: var(--display); font-weight: 500; font-size: 1.25rem; color: var(--cream); }
+  .clip.featured { grid-column: 1 / -1; gap: 14px; }
+  .clip.featured video { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold), 0 18px 60px #f6d03c22; }
+  .clip.featured figcaption { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 6px 32px; align-items: start; }
+  .clip.featured figcaption strong { font-size: clamp(1.6rem, 3.5vw, 2.3rem); font-weight: 700; }
+  .clip .tag, .rig .tag { font-family: var(--display); color: var(--gold); font-size: .8rem; letter-spacing: .12em; grid-column: 1 / -1; }
+  .beats { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: .92rem; }
+  .beats b { color: var(--cream); font-weight: 600; font-variant-numeric: tabular-nums; margin-right: 6px; }
+  .rig { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+  .rig h3 { font-size: 1.25rem; font-weight: 500; }
+  .rig p { color: var(--moss); font-size: .93rem; }
+  @media (max-width: 720px) { .clips { grid-template-columns: minmax(0, 1fr); } .clip.featured figcaption { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body class="electric">
@@ -60,7 +76,34 @@
 
   <section class="film" id="animacoes">
     <h2>Animações</h2>
-    <div class="soon"><strong>Em breve</strong>Duas animações do Pikachu, feitas com o mesmo esqueleto das animações do Gengar.</div>
+    <p class="lead">Vídeos renderizados pelo Ink Studio, quadro a quadro, com o mesmo esqueleto das animações do Gengar, agora com cabeça, orelhas e rabo móveis.</p>
+    <div class="clips">
+      <figure class="clip featured">
+        <video src="pikachu-animacoes/choque.mp4" poster="pikachu-animacoes/choque.png" controls muted loop playsinline preload="metadata"></video>
+        <figcaption>
+          <span class="tag">EM DESTAQUE · 8 SEGUNDOS · 120 QUADROS</span>
+          <strong>Choque do trovão</strong>
+          <ul class="beats">
+            <li><b>0–1 s</b>Parado, respirando; mexe uma orelha.</li>
+            <li><b>1–2 s</b>Agacha, inclina para a frente e levanta as orelhas.</li>
+            <li><b>1,6–4,2 s</b>As bochechas faíscam cada vez mais e o corpo vibra.</li>
+            <li><b>4,2–5,8 s</b>Solta o choque: clarão, raios em zigue-zague com galhos piscando em volta e a câmera treme.</li>
+            <li><b>6,3–8 s</b>Comemora com um pulinho, acenando e abanando o rabo.</li>
+          </ul>
+        </figcaption>
+      </figure>
+      <figure class="clip">
+        <video src="pikachu-animacoes/feliz.mp4" poster="pikachu-animacoes/feliz.png" controls muted loop playsinline preload="metadata"></video>
+        <figcaption><span class="tag">LOOP · 6 SEGUNDOS</span><strong>Pikachu feliz</strong>Três pulinhos com o corpo esticando e achatando, orelhas balançando com atraso, aceno, cabeça inclinada e rabo abanando. <a class="back" href="pikachu-animacoes/feliz.gif">Abrir como GIF</a></figcaption>
+      </figure>
+      <div class="rig">
+        <span class="tag">COMO SE MEXE</span>
+        <h3>Um esqueleto de 9 partes</h3>
+        <p>Cada splat do Pikachu pertence a uma parte: corpo, cabeça, duas orelhas, dois braços, dois pés ou rabo, decidida pela posição dele em relação a cada osso.</p>
+        <p>A cada quadro, cada parte gira em volta do seu ponto de giro, e a forma de cada splat gira junto (<code>C' = M·C·Mᵀ</code>). As orelhas seguem a cabeça, e a cabeça segue o corpo.</p>
+        <p>Raios e faíscas são splats extras, brilhantes e quase sem espessura, que piscam alternando três grupos.</p>
+      </div>
+    </div>
   </section>
 
   <footer>
