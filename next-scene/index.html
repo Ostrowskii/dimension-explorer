@@ -4,36 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Torre e árvore dourada em uma clareira 3D." />
-    <title>Dimension Explorer — Árvore</title>
+    <title data-en="Dimension Explorer — Tree">Dimension Explorer — Árvore</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap" />
-    <link rel="stylesheet" href="style.css?v=202611182011" />
-    <link rel="stylesheet" href="../panel.css?v=202611182011" />
+    <link rel="stylesheet" href="style.css?v=202611182015" />
+    <link rel="stylesheet" href="../panel.css?v=202611182015" />
   </head>
   <body class="de">
     <main>
-      <canvas id="world" aria-label="Cena 3D interativa da torre e árvore dourada"></canvas>
+      <canvas data-en-aria-label="Interactive 3D scene of the tower and golden tree" id="world" aria-label="Cena 3D interativa da torre e árvore dourada"></canvas>
       <header class="de-bar">
-        <button class="de-exit" id="de-exit" type="button"><span class="arrow" aria-hidden="true">←</span> Sair do Dimension Explorer <kbd>Esc</kbd></button>
-        <h1>Árvore</h1>
+        <button data-en="&lt;span aria-hidden=&quot;true&quot; class=&quot;arrow&quot;&gt;←&lt;/span&gt; Exit the Dimension Explorer &lt;kbd&gt;Esc&lt;/kbd&gt;" class="de-exit" id="de-exit" type="button"><span class="arrow" aria-hidden="true">←</span> Sair do Dimension Explorer <kbd>Esc</kbd></button>
+        <h1 data-en="Tree">Árvore</h1>
       </header>
-      <div class="de-enter" id="de-enter" aria-hidden="true"><span class="de-badge">◈ Dimension Explorer</span><strong>Árvore</strong><span class="de-load">Entrando…</span></div>
+      <div class="de-enter" id="de-enter" aria-hidden="true"><span class="de-badge">◈ Dimension Explorer</span><strong data-en="Tree">Árvore</strong><span data-en="Entering…" class="de-load">Entrando…</span></div>
       <section class="panel" aria-live="polite">
         <details open>
-          <summary>
+          <summary data-en="&lt;span class=&quot;summary-label&quot;&gt;Controls&lt;/span&gt; &lt;span aria-hidden=&quot;true&quot; class=&quot;toggle&quot;&gt;&lt;/span&gt;">
             <span class="summary-label">Controles</span>
             <span class="toggle" aria-hidden="true"></span>
           </summary>
           <div class="panel-body">
-          <nav class="scene-picker" aria-label="Selecionar projeto">
+          <nav data-en-aria-label="Choose a project" class="scene-picker" aria-label="Selecionar projeto">
             <div class="group">
-              <span class="scene-label">Cenas</span>
+              <span data-en="Scenes" class="scene-label">Cenas</span>
               <div class="chips">
-              <a href="../dist/index.html">Torre</a>
-              <a href="index.html" aria-current="page">Árvore</a>
-              <a href="../third-scene/index.html">Lago</a>
-              <a href="../fourth-scene/index.html">Filme</a>
+              <a data-en="Tower" href="../dist/index.html">Torre</a>
+              <a data-en="Tree" href="index.html" aria-current="page">Árvore</a>
+              <a data-en="Pond" href="../third-scene/index.html">Lago</a>
+              <a data-en="Film" href="../fourth-scene/index.html">Filme</a>
               </div>
             </div>
             <!-- fanart:start -->
@@ -53,21 +53,22 @@
             <!-- fanart:end -->
           </nav>
             <div class="group">
-              <span class="scene-label">Vista</span>
+              <span data-en="View" class="scene-label">Vista</span>
               <div class="controls">
-                <button id="reset" type="button">Restaurar</button>
-                <button id="front" type="button">Frontal</button>
-                <button id="top" type="button">Superior</button>
+                <button data-en="Reset" id="reset" type="button">Restaurar</button>
+                <button data-en="Front" id="front" type="button">Frontal</button>
+                <button data-en="Top" id="top" type="button">Superior</button>
               </div>
             </div>
-            <p class="hint"><kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco</p>
-            <p id="status">Carregando cena…</p>
+            <p data-en="&lt;kbd&gt;drag&lt;/kbd&gt; to orbit · &lt;kbd&gt;wheel&lt;/kbd&gt; to zoom · &lt;kbd&gt;right button&lt;/kbd&gt; to pan" class="hint"><kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco</p>
+            <p data-en="Loading scene…" id="status">Carregando cena…</p>
           </div>
         </details>
       </section>
     </main>
     <script src="scene-data.js"></script>
     <script src="viewer.js"></script>
-    <script src="../explorer.js?v=202611182011"></script>
+    <script src="../explorer.js?v=202611182015"></script>
+    <script src="../i18n.js?v=202611182015"></script>
   </body>
 </html>

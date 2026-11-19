@@ -92,3 +92,11 @@ html { scroll-behavior: smooth; }
   .wrap { padding-block: 32px 48px; gap: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .scene { transition: none; } .scene:hover { transform: none; } }
+
+/* botão de idioma: mostra a bandeira do idioma para o qual vai trocar */
+.lang-toggle {
+  display: inline-grid; place-items: center; width: 44px; height: 32px; padding: 0; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--panel);
+}
+.lang-toggle svg { width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 0 0 1px #0006; display: block; }
+.lang-toggle:hover, .lang-toggle:focus-visible { border-color: var(--gold); outline: none; }

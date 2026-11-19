@@ -8,54 +8,54 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="home.css?v=202611182011">
+<link rel="stylesheet" href="home.css?v=202611182015">
 </head>
 <body>
 <div class="wrap">
-  <nav class="topbar" aria-label="Navegação">
+  <nav data-en-aria-label="Navigation" class="topbar" aria-label="Navegação">
     <a class="brand" href="#">Splat Gallery</a>
     <div class="menu">
-      <a href="#cenas">Cenas</a>
-      <a href="#filme">Filme</a>
-      <a class="feature" href="#como-e-feito">Como é feito</a>
+      <a data-en="Scenes" href="#cenas">Cenas</a>
+      <a data-en="Film" href="#filme">Filme</a>
+      <a data-en="How it’s made" class="feature" href="#como-e-feito">Como é feito</a>
       <!-- fanart:start --><a href="gengar.html">Gengar</a><a href="pikachu-de-verdade.html">Pikachu</a><!-- fanart:end -->
     </div>
   </nav>
 
   <header>
-    <h1>Uma torre no bosque, em splats</h1>
-    <p class="lead">Quatro cenas 3D em pixel-art que você gira com o mouse. Cada uma foi escrita em código e é formada por dezenas de milhares de Gaussian splats, pequenas manchas 3D com cor, forma e orientação.</p>
-    <p class="hint">Escolha uma cena para entrar no <strong>Dimension Explorer</strong>, o modo 3D: <kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco · <kbd>Esc</kbd> sai</p>
+    <h1 data-en="A tower in the woods, in splats">Uma torre no bosque, em splats</h1>
+    <p data-en="Four pixel-art 3D scenes you spin with your mouse. Each one was written in code and is made of tens of thousands of Gaussian splats: tiny 3D blobs with color, shape and orientation." class="lead">Quatro cenas 3D em pixel-art que você gira com o mouse. Cada uma foi escrita em código e é formada por dezenas de milhares de Gaussian splats, pequenas manchas 3D com cor, forma e orientação.</p>
+    <p data-en="Pick a scene to enter the &lt;strong&gt;Dimension Explorer&lt;/strong&gt;, the 3D mode: &lt;kbd&gt;drag&lt;/kbd&gt; to orbit · &lt;kbd&gt;wheel&lt;/kbd&gt; to zoom · &lt;kbd&gt;right button&lt;/kbd&gt; to pan · &lt;kbd&gt;Esc&lt;/kbd&gt; to exit" class="hint">Escolha uma cena para entrar no <strong>Dimension Explorer</strong>, o modo 3D: <kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco · <kbd>Esc</kbd> sai</p>
   </header>
 
-  <section class="scenes" id="cenas" aria-label="Cenas">
+  <section data-en-aria-label="Scenes" class="scenes" id="cenas" aria-label="Cenas">
     <a class="scene" id="dist" href="dist/index.html">
-      <img src="thumbs/dist.png" alt="Torre de pedra com telhado roxo e dourado, cercada de árvores e um caminho de pedras" width="720" height="480">
-      <div class="text"><span class="num">CENA 1 · 51.728 SPLATS</span><h3>Torre</h3><p>Torre de pedra com janelas acesas, jardim, árvores e caminho até a porta.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
+      <img data-en-alt="Stone tower with a purple and gold roof, surrounded by trees and a stone path" src="thumbs/dist.png" alt="Torre de pedra com telhado roxo e dourado, cercada de árvores e um caminho de pedras" width="720" height="480">
+      <div class="text"><span data-en="SCENE 1 · 51,728 SPLATS" class="num">CENA 1 · 51.728 SPLATS</span><h3 data-en="Tower">Torre</h3><p data-en="A stone tower with lit windows, a garden, trees and a path to the door.">Torre de pedra com janelas acesas, jardim, árvores e caminho até a porta.</p><span data-en="◈ Enter the Dimension Explorer" class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
     <a class="scene" id="next-scene" href="next-scene/index.html">
-      <img src="thumbs/next-scene.png" alt="A torre ao lado de uma árvore de copa dourada, com feixes de sol" width="720" height="480">
-      <div class="text"><span class="num">CENA 2 · 66.354 SPLATS</span><h3>Árvore</h3><p>Uma árvore antiga 5/4 mais alta que a torre, com feixes de sol paralelos atravessando a copa.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
+      <img data-en-alt="The tower next to a golden-crowned tree, with sunbeams" src="thumbs/next-scene.png" alt="A torre ao lado de uma árvore de copa dourada, com feixes de sol" width="720" height="480">
+      <div class="text"><span data-en="SCENE 2 · 66,354 SPLATS" class="num">CENA 2 · 66.354 SPLATS</span><h3 data-en="Tree">Árvore</h3><p data-en="An ancient tree 5/4 taller than the tower, with parallel sunbeams cutting through its crown.">Uma árvore antiga 5/4 mais alta que a torre, com feixes de sol paralelos atravessando a copa.</p><span data-en="◈ Enter the Dimension Explorer" class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
     <a class="scene" id="third-scene" href="third-scene/index.html">
-      <img src="thumbs/third-scene.png" alt="A torre e a árvore dourada com um lago azul em primeiro plano" width="720" height="480">
-      <div class="text"><span class="num">CENA 3 · 71.846 SPLATS</span><h3>Lago</h3><p>Um lago de margem irregular com reflexo planar recalculado a cada ângulo da câmera.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
+      <img data-en-alt="The tower and the golden tree with a blue pond in the foreground" src="thumbs/third-scene.png" alt="A torre e a árvore dourada com um lago azul em primeiro plano" width="720" height="480">
+      <div class="text"><span data-en="SCENE 3 · 71,846 SPLATS" class="num">CENA 3 · 71.846 SPLATS</span><h3 data-en="Pond">Lago</h3><p data-en="A pond with an irregular shore and a planar reflection recomputed for every camera angle.">Um lago de margem irregular com reflexo planar recalculado a cada ângulo da câmera.</p><span data-en="◈ Enter the Dimension Explorer" class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
     <a class="scene" id="fourth-scene" href="fourth-scene/index.html">
-      <img src="thumbs/fourth-scene.png" alt="Versão mais detalhada da torre, árvore e lago" width="720" height="480">
-      <div class="text"><span class="num">CENA 4 · 87.667 SPLATS</span><h3>Filme</h3><p>Copa com mais ramos e folhas, preparada para o vídeo da câmera em arco.</p><span class="go">◈ Entrar no Dimension Explorer</span></div>
+      <img data-en-alt="More detailed version of the tower, tree and pond" src="thumbs/fourth-scene.png" alt="Versão mais detalhada da torre, árvore e lago" width="720" height="480">
+      <div class="text"><span data-en="SCENE 4 · 87,667 SPLATS" class="num">CENA 4 · 87.667 SPLATS</span><h3 data-en="Film">Filme</h3><p data-en="A crown with more branches and leaves, prepared for the arcing camera film.">Copa com mais ramos e folhas, preparada para o vídeo da câmera em arco.</p><span data-en="◈ Enter the Dimension Explorer" class="go">◈ Entrar no Dimension Explorer</span></div>
     </a>
   </section>
 
   <section class="film" id="filme">
-    <h2>A torre ao redor</h2>
-    <p class="lead">180 quadros renderizados pelo Ink Studio: a câmera percorre cerca de 198° em 12 segundos.</p>
+    <h2 data-en="Around the tower">A torre ao redor</h2>
+    <p data-en="180 frames rendered by Ink Studio: the camera travels about 198° in 12 seconds." class="lead">180 quadros renderizados pelo Ink Studio: a câmera percorre cerca de 198° em 12 segundos.</p>
     <video src="fourth-scene/orbit.mp4" controls muted loop playsinline preload="metadata"></video>
   </section>
 
   <section class="how" id="como-e-feito">
-    <h2>Como é feito</h2>
-    <p class="lead">Cada cena começa como código, vira uma nuvem de splats e é desenhada como elipses que formam superfícies. Dá para refazer tudo em oito passos, a partir de um modelo pronto.</p>
+    <h2 data-en="How it’s made">Como é feito</h2>
+    <p data-en="Every scene starts as code, becomes a cloud of splats and is drawn as ellipses that form surfaces. You can redo it all in eight steps, starting from a ready-made template." class="lead">Cada cena começa como código, vira uma nuvem de splats e é desenhada como elipses que formam superfícies. Dá para refazer tudo em oito passos, a partir de um modelo pronto.</p>
     <div class="pipeline">
       <figure>
 <pre class="codecard" aria-label="Trecho de código da torre"><span class="c">// corpo da torre</span>
@@ -70,23 +70,23 @@
 
 <span class="c">// vira splats</span>
 <span class="k">S.bake</span>();</pre>
-        <figcaption><span class="tag">1 · CÓDIGO</span><strong>Você descreve formas</strong>Um perfil girado em torno do eixo vertical vira o corpo da torre; outro, mais fino no topo, vira o telhado.</figcaption>
+        <figcaption data-en="&lt;span class=&quot;tag&quot;&gt;1 · CODE&lt;/span&gt;&lt;strong&gt;You describe shapes&lt;/strong&gt;A profile spun around the vertical axis becomes the tower’s body; another, narrower at the top, becomes the roof."><span class="tag">1 · CÓDIGO</span><strong>Você descreve formas</strong>Um perfil girado em torno do eixo vertical vira o corpo da torre; outro, mais fino no topo, vira o telhado.</figcaption>
       </figure>
       <figure>
-        <img src="thumbs/como-pontos.png" alt="A torre formada por milhares de pontos coloridos soltos" width="720" height="720" loading="lazy">
-        <figcaption><span class="tag">2 · SPLATS</span><strong>O motor espalha pontos</strong>O Ink Studio cobre cada superfície com splats: posição, cor, luz e o formato de cada mancha. Aqui eles aparecem encolhidos, como pontos.</figcaption>
+        <img data-en-alt="The tower made of thousands of loose colored dots" src="thumbs/como-pontos.png" alt="A torre formada por milhares de pontos coloridos soltos" width="720" height="720" loading="lazy">
+        <figcaption data-en="&lt;span class=&quot;tag&quot;&gt;2 · SPLATS&lt;/span&gt;&lt;strong&gt;The engine scatters points&lt;/strong&gt;Ink Studio covers every surface with splats: position, color, light and the shape of each blob. Here they are shrunk down to dots."><span class="tag">2 · SPLATS</span><strong>O motor espalha pontos</strong>O Ink Studio cobre cada superfície com splats: posição, cor, luz e o formato de cada mancha. Aqui eles aparecem encolhidos, como pontos.</figcaption>
       </figure>
       <figure>
-        <img src="thumbs/como-elipses.png" alt="A mesma torre com os pontos desenhados como elipses, formando paredes sólidas" width="720" height="720" loading="lazy">
-        <figcaption><span class="tag">3 · ELIPSES</span><strong>O WebGL fecha a superfície</strong>Cada ponto é desenhado como uma elipse virada na direção da parede. Elas se sobrepõem e a torre fica sólida.</figcaption>
+        <img data-en-alt="The same tower with the dots drawn as ellipses, forming solid walls" src="thumbs/como-elipses.png" alt="A mesma torre com os pontos desenhados como elipses, formando paredes sólidas" width="720" height="720" loading="lazy">
+        <figcaption data-en="&lt;span class=&quot;tag&quot;&gt;3 · ELLIPSES&lt;/span&gt;&lt;strong&gt;WebGL closes the surface&lt;/strong&gt;Each point is drawn as an ellipse facing the wall’s direction. They overlap and the tower turns solid."><span class="tag">3 · ELIPSES</span><strong>O WebGL fecha a superfície</strong>Cada ponto é desenhado como uma elipse virada na direção da parede. Elas se sobrepõem e a torre fica sólida.</figcaption>
       </figure>
     </div>
-    <a class="cta" href="como-fazer.html">Passo a passo completo →</a>
+    <a data-en="Full step-by-step guide →" class="cta" href="como-fazer.html">Passo a passo completo →</a>
   </section>
 
   <footer>
-    <p>Se a cena não abrir, o navegador está com o WebGL desativado. Use Chrome, Edge ou Firefox atualizados.</p>
-    <p>Motor procedural: <a href="https://github.com/siliconjungle/shapeshift-labs-ink-studio">Ink Studio</a>, © 2026 siliconjungle, licença MIT.</p>
+    <p data-en="If a scene won’t open, WebGL is turned off in your browser. Use an up-to-date Chrome, Edge or Firefox.">Se a cena não abrir, o navegador está com o WebGL desativado. Use Chrome, Edge ou Firefox atualizados.</p>
+    <p data-en="Procedural engine: &lt;a href=&quot;https://github.com/siliconjungle/shapeshift-labs-ink-studio&quot;&gt;Ink Studio&lt;/a&gt;, © 2026 siliconjungle, MIT license.">Motor procedural: <a href="https://github.com/siliconjungle/shapeshift-labs-ink-studio">Ink Studio</a>, © 2026 siliconjungle, licença MIT.</p>
   </footer>
 </div>
 <script>
@@ -98,5 +98,6 @@
     } catch (error) { /* sem armazenamento: o Sair usa o histórico do navegador */ }
   }));
 </script>
+<script src="i18n.js?v=202611182015"></script>
 </body>
 </html>

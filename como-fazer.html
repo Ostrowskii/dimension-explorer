@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Como fazer · Splat Gallery</title>
+<title data-en="How to · Splat Gallery">Como fazer · Splat Gallery</title>
 <meta name="description" content="Passo a passo para criar sua própria cena 3D em Gaussian splats com o Ink Studio e o Dimension Explorer.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="home.css?v=202611182011">
+<link rel="stylesheet" href="home.css?v=202611182015">
 <style>
   /* Tutorial: a reading column for steps, wide figures for the pipeline. */
   .narrow { max-width: 760px; display: grid; gap: 16px; min-width: 0; }
@@ -60,30 +60,30 @@
 </head>
 <body>
 <div class="wrap">
-  <nav class="topbar" aria-label="Navegação">
+  <nav data-en-aria-label="Navigation" class="topbar" aria-label="Navegação">
     <a class="brand" href="index.html">Splat Gallery</a>
     <div class="menu">
-      <a href="index.html#cenas">Cenas</a>
-      <a href="index.html#filme">Filme</a>
-      <a href="como-fazer.html" aria-current="page">Como é feito</a>
+      <a data-en="Scenes" href="index.html#cenas">Cenas</a>
+      <a data-en="Film" href="index.html#filme">Filme</a>
+      <a data-en="How it’s made" href="como-fazer.html" aria-current="page">Como é feito</a>
       <!-- fanart:start --><a href="gengar.html">Gengar</a><a href="pikachu-de-verdade.html">Pikachu</a><!-- fanart:end -->
     </div>
   </nav>
 
   <header class="narrow">
-    <p class="eyebrow">Passo a passo</p>
-    <h1>Faça sua própria cena em splats</h1>
-    <p class="lead">Do zero até um cogumelo 3D que você gira no navegador. Depois é só trocar o cogumelo pelo que você imaginar: as cenas da torre foram feitas exatamente assim.</p>
-    <div class="needs" aria-label="O que você precisa">
-      <span><b>Node</b> 18 ou mais novo</span>
+    <p data-en="Step by step" class="eyebrow">Passo a passo</p>
+    <h1 data-en="Make your own splat scene">Faça sua própria cena em splats</h1>
+    <p data-en="From zero to a 3D mushroom you spin in your browser. Then just swap the mushroom for whatever you imagine: the tower scenes were made exactly this way." class="lead">Do zero até um cogumelo 3D que você gira no navegador. Depois é só trocar o cogumelo pelo que você imaginar: as cenas da torre foram feitas exatamente assim.</p>
+    <div data-en-aria-label="What you need" class="needs" aria-label="O que você precisa">
+      <span data-en="&lt;b&gt;Node&lt;/b&gt; 18 or newer"><b>Node</b> 18 ou mais novo</span>
       <span><b>Git</b></span>
-      <span><b>Chrome</b> (ou Edge, Firefox)</span>
-      <span><b>Um editor</b> de texto</span>
+      <span data-en="&lt;b&gt;Chrome&lt;/b&gt; (or Edge, Firefox)"><b>Chrome</b> (ou Edge, Firefox)</span>
+      <span data-en="&lt;b&gt;A text&lt;/b&gt; editor"><b>Um editor</b> de texto</span>
     </div>
   </header>
 
   <section class="how" id="como-funciona">
-    <h2>Como funciona, em três imagens</h2>
+    <h2 data-en="How it works, in three pictures">Como funciona, em três imagens</h2>
     <div class="pipeline">
       <figure>
 <pre class="codecard" aria-label="Trecho de código da torre"><span class="c">// corpo da torre</span>
@@ -98,35 +98,35 @@
 
 <span class="c">// vira splats</span>
 <span class="k">S.bake</span>();</pre>
-        <figcaption><span class="tag">1 · CÓDIGO</span><strong>Você descreve formas</strong>Um perfil girado em torno do eixo vertical vira o corpo da torre; outro, mais fino no topo, vira o telhado.</figcaption>
+        <figcaption data-en="&lt;span class=&quot;tag&quot;&gt;1 · CODE&lt;/span&gt;&lt;strong&gt;You describe shapes&lt;/strong&gt;A profile spun around the vertical axis becomes the tower’s body; another, narrower at the top, becomes the roof."><span class="tag">1 · CÓDIGO</span><strong>Você descreve formas</strong>Um perfil girado em torno do eixo vertical vira o corpo da torre; outro, mais fino no topo, vira o telhado.</figcaption>
       </figure>
       <figure>
-        <img src="thumbs/como-pontos.png" alt="A torre formada por milhares de pontos coloridos soltos" width="720" height="720" loading="lazy">
-        <figcaption><span class="tag">2 · SPLATS</span><strong>O motor espalha pontos</strong>O Ink Studio cobre cada superfície com splats: posição, cor, luz e o formato de cada mancha. Aqui eles aparecem encolhidos, como pontos.</figcaption>
+        <img data-en-alt="The tower made of thousands of loose colored dots" src="thumbs/como-pontos.png" alt="A torre formada por milhares de pontos coloridos soltos" width="720" height="720" loading="lazy">
+        <figcaption data-en="&lt;span class=&quot;tag&quot;&gt;2 · SPLATS&lt;/span&gt;&lt;strong&gt;The engine scatters points&lt;/strong&gt;Ink Studio covers every surface with splats: position, color, light and the shape of each blob. Here they are shrunk down to dots."><span class="tag">2 · SPLATS</span><strong>O motor espalha pontos</strong>O Ink Studio cobre cada superfície com splats: posição, cor, luz e o formato de cada mancha. Aqui eles aparecem encolhidos, como pontos.</figcaption>
       </figure>
       <figure>
-        <img src="thumbs/como-elipses.png" alt="A mesma torre com os pontos desenhados como elipses, formando paredes sólidas" width="720" height="720" loading="lazy">
-        <figcaption><span class="tag">3 · ELIPSES</span><strong>O WebGL fecha a superfície</strong>Cada ponto é desenhado como uma elipse virada na direção da parede. Elas se sobrepõem e a torre fica sólida.</figcaption>
+        <img data-en-alt="The same tower with the dots drawn as ellipses, forming solid walls" src="thumbs/como-elipses.png" alt="A mesma torre com os pontos desenhados como elipses, formando paredes sólidas" width="720" height="720" loading="lazy">
+        <figcaption data-en="&lt;span class=&quot;tag&quot;&gt;3 · ELLIPSES&lt;/span&gt;&lt;strong&gt;WebGL closes the surface&lt;/strong&gt;Each point is drawn as an ellipse facing the wall’s direction. They overlap and the tower turns solid."><span class="tag">3 · ELIPSES</span><strong>O WebGL fecha a superfície</strong>Cada ponto é desenhado como uma elipse virada na direção da parede. Elas se sobrepõem e a torre fica sólida.</figcaption>
       </figure>
     </div>
   </section>
 
   <section class="how" id="passo-a-passo">
-    <h2>Passo a passo</h2>
+    <h2 data-en="Step by step">Passo a passo</h2>
     <ol class="steps-full">
       <li>
-        <h3>Confira se tem Node e Git</h3>
+        <h3 data-en="Check that you have Node and Git">Confira se tem Node e Git</h3>
         <div class="body">
-          <p>Abra o terminal e rode os dois comandos. O Node precisa mostrar <code>v18</code> ou maior. Se algum não existir, instale em <a href="https://nodejs.org">nodejs.org</a> e <a href="https://git-scm.com">git-scm.com</a>.</p>
+          <p data-en="Open a terminal and run both commands. Node must show &lt;code&gt;v18&lt;/code&gt; or higher. If either is missing, install it from &lt;a href=&quot;https://nodejs.org&quot;&gt;nodejs.org&lt;/a&gt; and &lt;a href=&quot;https://git-scm.com&quot;&gt;git-scm.com&lt;/a&gt;.">Abra o terminal e rode os dois comandos. O Node precisa mostrar <code>v18</code> ou maior. Se algum não existir, instale em <a href="https://nodejs.org">nodejs.org</a> e <a href="https://git-scm.com">git-scm.com</a>.</p>
           <div class="cmd"><pre>node --version
 git --version</pre></div>
         </div>
       </li>
 
       <li>
-        <h3>Baixe os dois projetos lado a lado</h3>
+        <h3 data-en="Download both projects side by side">Baixe os dois projetos lado a lado</h3>
         <div class="body">
-          <p>O <strong>Ink Studio</strong> é o motor que transforma formas em splats. O <strong>Dimension Explorer</strong> é este projeto: a Splat Gallery, o modo 3D onde as cenas são exploradas e o modelo de cena. As duas pastas precisam ficar dentro da mesma pasta.</p>
+          <p data-en="&lt;strong&gt;Ink Studio&lt;/strong&gt; is the engine that turns shapes into splats. &lt;strong&gt;Dimension Explorer&lt;/strong&gt; is this project: the Splat Gallery, the 3D mode where scenes are explored, and the scene template. Both folders must sit inside the same folder.">O <strong>Ink Studio</strong> é o motor que transforma formas em splats. O <strong>Dimension Explorer</strong> é este projeto: a Splat Gallery, o modo 3D onde as cenas são exploradas e o modelo de cena. As duas pastas precisam ficar dentro da mesma pasta.</p>
           <div class="cmd"><pre>mkdir splats
 cd splats
 git clone https://github.com/siliconjungle/shapeshift-labs-ink-studio
@@ -140,61 +140,61 @@ cd dimension-explorer</pre></div>
       </li>
 
       <li>
-        <h3>Abra o modelo no navegador</h3>
+        <h3 data-en="Open the template in your browser">Abra o modelo no navegador</h3>
         <div class="body">
-          <p>O modelo já vem pronto. Abra o arquivo <code>modelo/index.html</code> no Chrome (dois cliques no gerenciador de arquivos também funcionam) e gire o cogumelo com o mouse.</p>
+          <p data-en="The template comes ready. Open &lt;code&gt;modelo/index.html&lt;/code&gt; in Chrome (double-clicking it in your file manager works too) and spin the mushroom with your mouse.">O modelo já vem pronto. Abra o arquivo <code>modelo/index.html</code> no Chrome (dois cliques no gerenciador de arquivos também funcionam) e gire o cogumelo com o mouse.</p>
           <div class="cmd"><pre>xdg-open modelo/index.html</pre></div>
-          <p>No macOS, use <code>open modelo/index.html</code>; no Windows, <code>start modelo\index.html</code>.</p>
-          <img class="shot" src="thumbs/como-modelo.png" alt="O modelo: um cogumelo vermelho com pintas brancas sobre um disco de grama" width="720" height="480" loading="lazy">
-          <div class="note"><p><strong>Apareceu “Não foi possível iniciar o WebGL”?</strong> Seu navegador está com a aceleração 3D desligada. No Linux, abra o Chrome forçando o WebGL por software:</p>
+          <p data-en="On macOS, use &lt;code&gt;open modelo/index.html&lt;/code&gt;; on Windows, &lt;code&gt;start modelo\index.html&lt;/code&gt;.">No macOS, use <code>open modelo/index.html</code>; no Windows, <code>start modelo\index.html</code>.</p>
+          <img data-en-alt="The template: a red mushroom with white spots on a grass disc" class="shot" src="thumbs/como-modelo.png" alt="O modelo: um cogumelo vermelho com pintas brancas sobre um disco de grama" width="720" height="480" loading="lazy">
+          <div class="note"><p data-en="&lt;strong&gt;Seeing “Não foi possível iniciar o WebGL” (WebGL could not start)?&lt;/strong&gt; Your browser has 3D acceleration turned off. On Linux, open Chrome forcing software WebGL:"><strong>Apareceu “Não foi possível iniciar o WebGL”?</strong> Seu navegador está com a aceleração 3D desligada. No Linux, abra o Chrome forçando o WebGL por software:</p>
             <div class="cmd"><pre>google-chrome --user-data-dir=/tmp/splats-webgl --ignore-gpu-blocklist --use-angle=swiftshader modelo/index.html</pre></div></div>
         </div>
       </li>
 
       <li>
-        <h3>Copie o modelo para a sua cena</h3>
+        <h3 data-en="Copy the template into your scene">Copie o modelo para a sua cena</h3>
         <div class="body">
-          <p>Nunca edite o modelo: faça uma cópia com o nome da sua cena. Tudo o que você vai mudar fica em um arquivo só, <code>minha-cena/cena.js</code>.</p>
+          <p data-en="Never edit the template: make a copy named after your scene. Everything you will change lives in a single file, &lt;code&gt;minha-cena/cena.js&lt;/code&gt;.">Nunca edite o modelo: faça uma cópia com o nome da sua cena. Tudo o que você vai mudar fica em um arquivo só, <code>minha-cena/cena.js</code>.</p>
           <div class="cmd"><pre>cp -r modelo minha-cena</pre></div>
-          <p>No Windows (PowerShell): <code>Copy-Item modelo minha-cena -Recurse</code>.</p>
+          <p data-en="On Windows (PowerShell): &lt;code&gt;Copy-Item modelo minha-cena -Recurse&lt;/code&gt;.">No Windows (PowerShell): <code>Copy-Item modelo minha-cena -Recurse</code>.</p>
         </div>
       </li>
 
       <li>
-        <h3>Mude alguma coisa em cena.js</h3>
+        <h3 data-en="Change something in cena.js">Mude alguma coisa em cena.js</h3>
         <div class="body">
-          <p>Abra <code>minha-cena/cena.js</code> no editor. Ele está dividido em cinco partes comentadas: paleta, materiais, formas, <code>S.bake()</code> e câmera. Para o primeiro teste, troque uma cor e um tamanho:</p>
+          <p data-en="Open &lt;code&gt;minha-cena/cena.js&lt;/code&gt; in your editor. It is split into five commented parts (in Portuguese): palette, materials, shapes, &lt;code&gt;S.bake()&lt;/code&gt; and camera. For a first test, change a color and a size:">Abra <code>minha-cena/cena.js</code> no editor. Ele está dividido em cinco partes comentadas: paleta, materiais, formas, <code>S.bake()</code> e câmera. Para o primeiro teste, troque uma cor e um tamanho:</p>
           <ul>
-            <li>Na paleta, troque <code>0xd2453f</code> (vermelho claro) por <code>0x4f8ad8</code>: o chapéu fica azul.</li>
-            <li>No caule, troque a altura <code>1.5</code> por <code>2.5</code> e o chapéu de <code>1.65</code> para <code>2.65</code>: o cogumelo cresce.</li>
-            <li>Em <code>name: 'Cogumelo'</code>, coloque o nome da sua cena. Ele aparece como título da página.</li>
+            <li data-en="In the palette, replace &lt;code&gt;0xd2453f&lt;/code&gt; (light red) with &lt;code&gt;0x4f8ad8&lt;/code&gt;: the cap turns blue.">Na paleta, troque <code>0xd2453f</code> (vermelho claro) por <code>0x4f8ad8</code>: o chapéu fica azul.</li>
+            <li data-en="In the stem, change the height &lt;code&gt;1.5&lt;/code&gt; to &lt;code&gt;2.5&lt;/code&gt; and the cap from &lt;code&gt;1.65&lt;/code&gt; to &lt;code&gt;2.65&lt;/code&gt;: the mushroom grows.">No caule, troque a altura <code>1.5</code> por <code>2.5</code> e o chapéu de <code>1.65</code> para <code>2.65</code>: o cogumelo cresce.</li>
+            <li data-en="In &lt;code&gt;name: &#x27;Cogumelo&#x27;&lt;/code&gt;, put your scene&#x27;s name. It shows up as the page title.">Em <code>name: 'Cogumelo'</code>, coloque o nome da sua cena. Ele aparece como título da página.</li>
           </ul>
         </div>
       </li>
 
       <li>
-        <h3>Gere os splats e recarregue</h3>
+        <h3 data-en="Generate the splats and reload">Gere os splats e recarregue</h3>
         <div class="body">
-          <p>Este comando roda o Ink Studio sobre o seu <code>cena.js</code> e grava <code>scene-data.js</code>, o arquivo que o visualizador lê.</p>
+          <p data-en="This command runs Ink Studio on your &lt;code&gt;cena.js&lt;/code&gt; and writes &lt;code&gt;scene-data.js&lt;/code&gt;, the file the viewer reads.">Este comando roda o Ink Studio sobre o seu <code>cena.js</code> e grava <code>scene-data.js</code>, o arquivo que o visualizador lê.</p>
           <div class="cmd"><pre>cd minha-cena
 node export-scene.js</pre></div>
-          <p>Abra <code>minha-cena/index.html</code> e recarregue com <code>Ctrl+Shift+R</code>. A partir daqui o ciclo é sempre o mesmo: <strong>editar cena.js → node export-scene.js → recarregar</strong>.</p>
+          <p data-en="Open &lt;code&gt;minha-cena/index.html&lt;/code&gt; and reload with &lt;code&gt;Ctrl+Shift+R&lt;/code&gt;. From here on the loop is always the same: &lt;strong&gt;edit cena.js → node export-scene.js → reload&lt;/strong&gt;.">Abra <code>minha-cena/index.html</code> e recarregue com <code>Ctrl+Shift+R</code>. A partir daqui o ciclo é sempre o mesmo: <strong>editar cena.js → node export-scene.js → recarregar</strong>.</p>
         </div>
       </li>
 
       <li>
-        <h3>Gere uma imagem pixel-art <span class="optional">OPCIONAL</span></h3>
+        <h3 data-en="Render a pixel-art image &lt;span class=&quot;optional&quot;&gt;OPTIONAL&lt;/span&gt;">Gere uma imagem pixel-art <span class="optional">OPCIONAL</span></h3>
         <div class="body">
-          <p>O Ink Studio também desenha a cena como PNG, no estilo pixel-art. Mude o ângulo com <code>--yaw</code> (giro, em radianos) e <code>--pitch</code> (altura).</p>
+          <p data-en="Ink Studio can also draw the scene as a pixel-art PNG. Change the angle with &lt;code&gt;--yaw&lt;/code&gt; (turn, in radians) and &lt;code&gt;--pitch&lt;/code&gt; (height).">O Ink Studio também desenha a cena como PNG, no estilo pixel-art. Mude o ângulo com <code>--yaw</code> (giro, em radianos) e <code>--pitch</code> (altura).</p>
           <div class="cmd"><pre>node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render cena.js --out cena.png --w 900 --h 900
 node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render cena.js --out lado.png --yaw 1.5</pre></div>
         </div>
       </li>
 
       <li>
-        <h3>Coloque na página inicial <span class="optional">OPCIONAL</span></h3>
+        <h3 data-en="Add it to the home page &lt;span class=&quot;optional&quot;&gt;OPTIONAL&lt;/span&gt;">Coloque na página inicial <span class="optional">OPCIONAL</span></h3>
         <div class="body">
-          <p>No <code>index.html</code> da raiz, copie um dos cartões <code>&lt;a class="scene"&gt;</code> e troque o link, a imagem e o texto. A imagem de prévia fica em <code>thumbs/</code>, com 720×480 pixels; uma captura de tela da sua cena serve.</p>
+          <p data-en="In the root &lt;code&gt;index.html&lt;/code&gt;, copy one of the &lt;code&gt;&amp;lt;a class=&quot;scene&quot;&amp;gt;&lt;/code&gt; cards and change the link, image and text. The preview image lives in &lt;code&gt;thumbs/&lt;/code&gt; at 720×480 pixels; a screenshot of your scene works.">No <code>index.html</code> da raiz, copie um dos cartões <code>&lt;a class="scene"&gt;</code> e troque o link, a imagem e o texto. A imagem de prévia fica em <code>thumbs/</code>, com 720×480 pixels; uma captura de tela da sua cena serve.</p>
           <div class="cmd"><pre>&lt;a class="scene" id="minha-cena" href="minha-cena/index.html"&gt;
   &lt;img src="thumbs/minha-cena.png" alt="Descreva a cena" width="720" height="480"&gt;
   &lt;div class="text"&gt;&lt;span class="num"&gt;CENA 5&lt;/span&gt;&lt;h3&gt;Minha cena&lt;/h3&gt;&lt;p&gt;O que tem nela.&lt;/p&gt;&lt;span class="go"&gt;◈ Entrar no Dimension Explorer&lt;/span&gt;&lt;/div&gt;
@@ -205,53 +205,53 @@ node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render cena.js --out lad
   </section>
 
   <section class="how" id="formas">
-    <h2>Formas que você pode usar</h2>
-    <p class="lead">Todas recebem um material (<code>{ r: [índices da paleta] }</code>) e um <code>res</code>: o espaçamento entre splats. Menor é mais detalhado e mais pesado; 0.1 é rascunho, 0.03 é detalhado.</p>
+    <h2 data-en="Shapes you can use">Formas que você pode usar</h2>
+    <p data-en="All of them take a material (&lt;code&gt;{ r: [palette indices] }&lt;/code&gt;) and a &lt;code&gt;res&lt;/code&gt;: the spacing between splats. Smaller is more detailed and heavier; 0.1 is a sketch, 0.03 is detailed." class="lead">Todas recebem um material (<code>{ r: [índices da paleta] }</code>) e um <code>res</code>: o espaçamento entre splats. Menor é mais detalhado e mais pesado; 0.1 é rascunho, 0.03 é detalhado.</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Forma</th><th>Para quê</th><th>Exemplo</th></tr></thead>
+        <thead><tr><th data-en="Shape">Forma</th><th data-en="What for">Para quê</th><th data-en="Example">Exemplo</th></tr></thead>
         <tbody>
-          <tr><td><code>S.ground</code></td><td>Chão em disco, com relevo opcional</td><td><code>S.ground(grama, { h: (x, z) =&gt; 0, rad: 3, res: 0.1 })</code></td></tr>
-          <tr><td><code>S.ball</code></td><td>Esfera ou elipse: copas, pedras, corpos</td><td><code>S.ball([0, 1, 0], [1, 0.5, 1], mat, { res: 0.05 })</code></td></tr>
-          <tr><td><code>S.box</code></td><td>Caixa, com cantos arredondados em <code>rd</code></td><td><code>S.box([0, 0.5, 0], [0.5, 0.5, 0.5], mat, { rd: 0.1 })</code></td></tr>
-          <tr><td><code>S.lathe</code></td><td>Perfil girado em torno de Y: torres, caules, cones</td><td><code>S.lathe([0, 0, 0], 2, [0.5, 0.3], mat, { res: 0.05 })</code></td></tr>
-          <tr><td><code>S.tube</code></td><td>Tubo por uma lista de pontos, afinando: troncos, galhos, chifres</td><td><code>S.tube([[0,0,0], [0,1,0.3]], 0.2, 0.02, mat)</code></td></tr>
-          <tr><td><code>S.join</code></td><td>Funde formas com curva suave (crie as peças com <code>{ hold: true }</code>)</td><td><code>S.join('round', corpo, [braco, perna], { r: 0.15 })</code></td></tr>
+          <tr><td><code>S.ground</code></td><td data-en="Disc-shaped ground, with optional bumps">Chão em disco, com relevo opcional</td><td><code>S.ground(grama, { h: (x, z) =&gt; 0, rad: 3, res: 0.1 })</code></td></tr>
+          <tr><td><code>S.ball</code></td><td data-en="Sphere or ellipsoid: treetops, stones, bodies">Esfera ou elipse: copas, pedras, corpos</td><td><code>S.ball([0, 1, 0], [1, 0.5, 1], mat, { res: 0.05 })</code></td></tr>
+          <tr><td><code>S.box</code></td><td data-en="Box, with corners rounded by &lt;code&gt;rd&lt;/code&gt;">Caixa, com cantos arredondados em <code>rd</code></td><td><code>S.box([0, 0.5, 0], [0.5, 0.5, 0.5], mat, { rd: 0.1 })</code></td></tr>
+          <tr><td><code>S.lathe</code></td><td data-en="Profile spun around Y: towers, stems, cones">Perfil girado em torno de Y: torres, caules, cones</td><td><code>S.lathe([0, 0, 0], 2, [0.5, 0.3], mat, { res: 0.05 })</code></td></tr>
+          <tr><td><code>S.tube</code></td><td data-en="Tapering tube through a list of points: trunks, branches, horns">Tubo por uma lista de pontos, afinando: troncos, galhos, chifres</td><td><code>S.tube([[0,0,0], [0,1,0.3]], 0.2, 0.02, mat)</code></td></tr>
+          <tr><td><code>S.join</code></td><td data-en="Blends shapes with a smooth curve (create the parts with &lt;code&gt;{ hold: true }&lt;/code&gt;)">Funde formas com curva suave (crie as peças com <code>{ hold: true }</code>)</td><td data-en="&lt;code&gt;S.join(&#x27;round&#x27;, body, [arm, leg], { r: 0.15 })&lt;/code&gt;"><code>S.join('round', corpo, [braco, perna], { r: 0.15 })</code></td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <section class="how" id="truques">
-    <h2>Truques usados nas cenas da torre</h2>
+    <h2 data-en="Tricks used in the tower scenes">Truques usados nas cenas da torre</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Efeito</th><th>Como</th><th>Onde ver</th></tr></thead>
+        <thead><tr><th data-en="Effect">Efeito</th><th data-en="How">Como</th><th data-en="Where to look">Onde ver</th></tr></thead>
         <tbody>
-          <tr><td>Pintar detalhes</td><td>Uma função <code>tex(x, y, z)</code> no material devolve a cor de cada ponto da superfície. As pintas do cogumelo são feitas assim.</td><td><code>modelo/cena.js</code></td></tr>
-          <tr><td>Brilho próprio</td><td>Material com <code>em: true</code>: janelas acesas, lanternas.</td><td><code>dist/</code> (janelas)</td></tr>
-          <tr><td>Feixes de sol</td><td>Depois do <code>S.bake()</code>, milhares de splats dourados quase transparentes com <code>B.dab</code>, todos paralelos à direção do sol, <code>S.sun</code>.</td><td><code>third-scene/pond-garden.js</code></td></tr>
-          <tr><td>Água com reflexo</td><td>Splats de água com <code>B.disc(…, { k: 7 })</code> e <code>pond</code> no <code>B.finish</code>. O visualizador reflete a cena só sobre eles.</td><td><code>third-scene/</code></td></tr>
-          <tr><td>Vídeo girando</td><td>Renderiza 180 quadros com o Ink Studio mudando a câmera e junta com o ffmpeg.</td><td><code>fourth-scene/render-video.js</code></td></tr>
+          <tr><td data-en="Painting details">Pintar detalhes</td><td data-en="A &lt;code&gt;tex(x, y, z)&lt;/code&gt; function in the material returns the color of each surface point. The mushroom spots are made this way.">Uma função <code>tex(x, y, z)</code> no material devolve a cor de cada ponto da superfície. As pintas do cogumelo são feitas assim.</td><td><code>modelo/cena.js</code></td></tr>
+          <tr><td data-en="Self-glow">Brilho próprio</td><td data-en="A material with &lt;code&gt;em: true&lt;/code&gt;: lit windows, lanterns.">Material com <code>em: true</code>: janelas acesas, lanternas.</td><td data-en="&lt;code&gt;dist/&lt;/code&gt; (windows)"><code>dist/</code> (janelas)</td></tr>
+          <tr><td data-en="Sunbeams">Feixes de sol</td><td data-en="After &lt;code&gt;S.bake()&lt;/code&gt;, thousands of almost transparent golden splats with &lt;code&gt;B.dab&lt;/code&gt;, all parallel to the sun direction, &lt;code&gt;S.sun&lt;/code&gt;.">Depois do <code>S.bake()</code>, milhares de splats dourados quase transparentes com <code>B.dab</code>, todos paralelos à direção do sol, <code>S.sun</code>.</td><td><code>third-scene/pond-garden.js</code></td></tr>
+          <tr><td data-en="Reflective water">Água com reflexo</td><td data-en="Water splats with &lt;code&gt;B.disc(…, { k: 7 })&lt;/code&gt; and &lt;code&gt;pond&lt;/code&gt; in &lt;code&gt;B.finish&lt;/code&gt;. The viewer reflects the scene only on them.">Splats de água com <code>B.disc(…, { k: 7 })</code> e <code>pond</code> no <code>B.finish</code>. O visualizador reflete a cena só sobre eles.</td><td><code>third-scene/</code></td></tr>
+          <tr><td data-en="Orbiting video">Vídeo girando</td><td data-en="Renders 180 frames with Ink Studio while moving the camera, then joins them with ffmpeg.">Renderiza 180 quadros com o Ink Studio mudando a câmera e junta com o ffmpeg.</td><td><code>fourth-scene/render-video.js</code></td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <section class="how" id="problemas">
-    <h2>Se algo der errado</h2>
+    <h2 data-en="If something goes wrong">Se algo der errado</h2>
     <dl class="faq narrow">
-      <div><dt>“Não encontrei o Ink Studio”</dt><dd>As pastas <code>shapeshift-labs-ink-studio</code> e <code>dimension-explorer</code> precisam estar lado a lado (passo 2). Se estiverem em outro lugar, rode <code>INK_STUDIO=/caminho/do/ink-studio node export-scene.js</code>.</dd></div>
-      <div><dt>“Não foi possível iniciar o WebGL ou carregar a cena”</dt><dd>Ou o WebGL está desligado (veja a nota do passo 3), ou o <code>scene-data.js</code> não foi gerado: rode <code>node export-scene.js</code> dentro da pasta da cena.</dd></div>
-      <div><dt>Mudei o código e nada mudou</dt><dd>Gere de novo com <code>node export-scene.js</code> e recarregue com <code>Ctrl+Shift+R</code>, que ignora a versão guardada pelo navegador.</dd></div>
-      <div><dt>A cena ficou lenta</dt><dd>Aumente o <code>res</code> das formas grandes (por exemplo, de 0.03 para 0.06). O total de splats aparece no painel; até cerca de 100 mil gira bem.</dd></div>
-      <div><dt>Erro de sintaxe ao rodar export-scene.js</dt><dd>A mensagem mostra o número da linha de <code>cena.js</code>. Quase sempre é uma vírgula, um parêntese ou um colchete faltando.</dd></div>
+      <div><dt data-en="“Não encontrei o Ink Studio” (Ink Studio not found)">“Não encontrei o Ink Studio”</dt><dd data-en="The &lt;code&gt;shapeshift-labs-ink-studio&lt;/code&gt; and &lt;code&gt;dimension-explorer&lt;/code&gt; folders must sit side by side (step 2). If they are elsewhere, run &lt;code&gt;INK_STUDIO=/path/to/ink-studio node export-scene.js&lt;/code&gt;.">As pastas <code>shapeshift-labs-ink-studio</code> e <code>dimension-explorer</code> precisam estar lado a lado (passo 2). Se estiverem em outro lugar, rode <code>INK_STUDIO=/caminho/do/ink-studio node export-scene.js</code>.</dd></div>
+      <div><dt data-en="“Não foi possível iniciar o WebGL ou carregar a cena” (couldn’t start WebGL or load the scene)">“Não foi possível iniciar o WebGL ou carregar a cena”</dt><dd data-en="Either WebGL is off (see the note in step 3), or &lt;code&gt;scene-data.js&lt;/code&gt; was not generated: run &lt;code&gt;node export-scene.js&lt;/code&gt; inside the scene folder.">Ou o WebGL está desligado (veja a nota do passo 3), ou o <code>scene-data.js</code> não foi gerado: rode <code>node export-scene.js</code> dentro da pasta da cena.</dd></div>
+      <div><dt data-en="I changed the code and nothing changed">Mudei o código e nada mudou</dt><dd data-en="Generate again with &lt;code&gt;node export-scene.js&lt;/code&gt; and reload with &lt;code&gt;Ctrl+Shift+R&lt;/code&gt;, which skips the browser’s cached copy.">Gere de novo com <code>node export-scene.js</code> e recarregue com <code>Ctrl+Shift+R</code>, que ignora a versão guardada pelo navegador.</dd></div>
+      <div><dt data-en="The scene got slow">A cena ficou lenta</dt><dd data-en="Increase the &lt;code&gt;res&lt;/code&gt; of large shapes (for example, from 0.03 to 0.06). The splat total shows in the panel; up to about 100 thousand spins smoothly.">Aumente o <code>res</code> das formas grandes (por exemplo, de 0.03 para 0.06). O total de splats aparece no painel; até cerca de 100 mil gira bem.</dd></div>
+      <div><dt data-en="Syntax error when running export-scene.js">Erro de sintaxe ao rodar export-scene.js</dt><dd data-en="The message shows the line number in &lt;code&gt;cena.js&lt;/code&gt;. It is almost always a missing comma, parenthesis or bracket.">A mensagem mostra o número da linha de <code>cena.js</code>. Quase sempre é uma vírgula, um parêntese ou um colchete faltando.</dd></div>
     </dl>
   </section>
 
   <footer>
-    <p><a class="back" href="index.html">← Voltar para as cenas</a></p>
-    <p>Motor procedural: <a href="https://github.com/siliconjungle/shapeshift-labs-ink-studio">Ink Studio</a>, © 2026 siliconjungle, licença MIT.</p>
+    <p data-en="&lt;a class=&quot;back&quot; href=&quot;index.html&quot;&gt;← Back to the scenes&lt;/a&gt;"><a class="back" href="index.html">← Voltar para as cenas</a></p>
+    <p data-en="Procedural engine: &lt;a href=&quot;https://github.com/siliconjungle/shapeshift-labs-ink-studio&quot;&gt;Ink Studio&lt;/a&gt;, © 2026 siliconjungle, MIT license.">Motor procedural: <a href="https://github.com/siliconjungle/shapeshift-labs-ink-studio">Ink Studio</a>, © 2026 siliconjungle, licença MIT.</p>
   </footer>
 </div>
 <script>
@@ -265,12 +265,14 @@ node ../../shapeshift-labs-ink-studio/cli/ink-studio.js render cena.js --out lad
     button.textContent = 'Copiar';
     button.addEventListener('click', () => {
       const text = textOf(pre);
-      const done = () => { button.textContent = 'Copiado'; setTimeout(() => { button.textContent = 'Copiar'; }, 1500); };
+      const en = () => window.splatLang && window.splatLang() === 'en';
+      const done = () => { button.textContent = en() ? 'Copied' : 'Copiado'; setTimeout(() => { button.textContent = en() ? 'Copy' : 'Copiar'; }, 1500); };
       const fallback = () => { const range = document.createRange(); range.selectNodeContents(pre); const selection = getSelection(); selection.removeAllRanges(); selection.addRange(range); button.textContent = 'Ctrl+C'; };
       if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
     });
     pre.parentElement.append(button);
   });
 </script>
+<script src="i18n.js?v=202611182015"></script>
 </body>
 </html>

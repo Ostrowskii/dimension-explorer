@@ -121,3 +121,12 @@ body.de.ghost { --night: #0c0a14; --glass: #120f20e6; --chip: #1b1630; --line: #
   .panel .toggle::before { transition: none; }
   .de-enter.gone { transition: none; }
 }
+
+/* botão de idioma na barra do modo */
+.de-bar .lang-toggle {
+  margin-left: auto; display: inline-grid; place-items: center; width: 52px; height: 40px; padding: 0; cursor: pointer;
+  border: 2px solid var(--line); border-radius: 999px; background: #000a; box-shadow: 0 6px 24px #0009;
+}
+.de-bar .lang-toggle svg { width: 28px; height: 19px; border-radius: 2px; box-shadow: 0 0 0 1px #0006; display: block; }
+.de-bar .lang-toggle:hover, .de-bar .lang-toggle:focus-visible { border-color: var(--gold); outline: none; }
+@media (max-width: 600px) { .de-bar .lang-toggle { width: 44px; height: 34px; } .de-bar h1 { order: 3; } }

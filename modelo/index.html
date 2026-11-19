@@ -7,49 +7,50 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap" />
-    <link rel="stylesheet" href="style.css?v=202611182011" />
-    <link rel="stylesheet" href="../panel.css?v=202611182011" />
+    <link rel="stylesheet" href="style.css?v=202611182015" />
+    <link rel="stylesheet" href="../panel.css?v=202611182015" />
   </head>
   <body class="de">
     <main>
-      <canvas id="world" aria-label="Cena 3D interativa"></canvas>
+      <canvas data-en-aria-label="Interactive 3D scene" id="world" aria-label="Cena 3D interativa"></canvas>
       <header class="de-bar">
-        <button class="de-exit" id="de-exit" type="button"><span class="arrow" aria-hidden="true">←</span> Sair do Dimension Explorer <kbd>Esc</kbd></button>
+        <button data-en="&lt;span aria-hidden=&quot;true&quot; class=&quot;arrow&quot;&gt;←&lt;/span&gt; Exit the Dimension Explorer &lt;kbd&gt;Esc&lt;/kbd&gt;" class="de-exit" id="de-exit" type="button"><span class="arrow" aria-hidden="true">←</span> Sair do Dimension Explorer <kbd>Esc</kbd></button>
         <h1>Minha cena</h1>
       </header>
-      <div class="de-enter" id="de-enter" aria-hidden="true"><span class="de-badge">◈ Dimension Explorer</span><strong>Minha cena</strong><span class="de-load">Entrando…</span></div>
+      <div class="de-enter" id="de-enter" aria-hidden="true"><span class="de-badge">◈ Dimension Explorer</span><strong data-en="My scene">Minha cena</strong><span data-en="Entering…" class="de-load">Entrando…</span></div>
       <section class="panel" aria-live="polite">
         <details open>
-          <summary>
+          <summary data-en="&lt;span class=&quot;summary-label&quot;&gt;Controls&lt;/span&gt; &lt;span aria-hidden=&quot;true&quot; class=&quot;toggle&quot;&gt;&lt;/span&gt;">
             <span class="summary-label">Controles</span>
             <span class="toggle" aria-hidden="true"></span>
           </summary>
           <div class="panel-body">
-          <nav class="scene-picker" aria-label="Navegação">
+          <nav data-en-aria-label="Navigation" class="scene-picker" aria-label="Navegação">
             <div class="group">
-              <span class="scene-label">Modelo</span>
+              <span data-en="Template" class="scene-label">Modelo</span>
               <div class="chips">
-              <a href="../como-fazer.html">Passo a passo</a>
-              <a href="../index.html#cenas">Ver as cenas</a>
+              <a data-en="Step by step" href="../como-fazer.html">Passo a passo</a>
+              <a data-en="See the scenes" href="../index.html#cenas">Ver as cenas</a>
               </div>
             </div>
           </nav>
             <div class="group">
-              <span class="scene-label">Vista</span>
+              <span data-en="View" class="scene-label">Vista</span>
               <div class="controls">
-                <button id="reset" type="button">Restaurar</button>
-                <button id="front" type="button">Frontal</button>
-                <button id="top" type="button">Superior</button>
+                <button data-en="Reset" id="reset" type="button">Restaurar</button>
+                <button data-en="Front" id="front" type="button">Frontal</button>
+                <button data-en="Top" id="top" type="button">Superior</button>
               </div>
             </div>
-            <p class="hint"><kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco</p>
-            <p id="status">Carregando cena…</p>
+            <p data-en="&lt;kbd&gt;drag&lt;/kbd&gt; to orbit · &lt;kbd&gt;wheel&lt;/kbd&gt; to zoom · &lt;kbd&gt;right button&lt;/kbd&gt; to pan" class="hint"><kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco</p>
+            <p data-en="Loading scene…" id="status">Carregando cena…</p>
           </div>
         </details>
       </section>
     </main>
     <script src="scene-data.js"></script>
     <script src="viewer.js"></script>
-    <script src="../explorer.js?v=202611182011"></script>
+    <script src="../explorer.js?v=202611182015"></script>
+    <script src="../i18n.js?v=202611182015"></script>
   </body>
 </html>

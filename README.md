@@ -151,6 +151,16 @@ cd fourth-scene && node render-video.js
 - **GitHub Pages:** cada `git push` para a branch `main` atualiza o site em poucos minutos.
 - **Versão sem fan art:** `node scripts/build-public.js` gera `public/` só com as quatro cenas da torre (e a página inicial sem o menu do Gengar), usada no link publicado pelo Claude.
 
+## Português e inglês
+
+O site é bilíngue. O texto em português fica no HTML; o inglês fica ao lado, no atributo `data-en` do mesmo elemento (e `data-en-alt` / `data-en-aria-label` para atributos). O `i18n.js` troca os dois sem recarregar e guarda a escolha. O botão mostra a bandeira do idioma de destino.
+
+Ao escrever um texto novo, coloque a versão em inglês no `data-en`. Para conferir o que falta:
+
+```bash
+python3 scripts/i18n-tool.py extract   # lista frases sem data-en em scripts/i18n-missing.json
+```
+
 ## Como funciona por dentro
 
 ```text

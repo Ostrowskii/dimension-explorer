@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="home.css?v=202611182011">
+<link rel="stylesheet" href="home.css?v=202611182015">
 <style>
   .electric { --gold: #f6d03c; }
   .hero-card { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 0; }
@@ -40,75 +40,75 @@
 </head>
 <body class="electric">
 <div class="wrap">
-  <nav class="topbar" aria-label="Navegação">
+  <nav data-en-aria-label="Navigation" class="topbar" aria-label="Navegação">
     <a class="brand" href="index.html">Splat Gallery</a>
     <div class="menu">
-      <a href="index.html#cenas">Cenas</a>
-      <a href="index.html#filme">Filme</a>
-      <a href="como-fazer.html">Como é feito</a>
+      <a data-en="Scenes" href="index.html#cenas">Cenas</a>
+      <a data-en="Film" href="index.html#filme">Filme</a>
+      <a data-en="How it’s made" href="como-fazer.html">Como é feito</a>
       <a href="gengar.html">Gengar</a>
       <a href="pikachu-de-verdade.html" aria-current="page">Pikachu</a>
     </div>
   </nav>
 
   <header>
-    <h1>Pikachu, em splats</h1>
-    <p class="lead">Fan art feita com a mesma técnica do Gengar detalhado: corpo, cabeça, orelhas, braços, pés e rabo fundidos num sólido só, com o rosto e as marcas pintados direto na superfície.</p>
-    <p class="hint">Entre no <strong>Dimension Explorer</strong>, o modo 3D: <kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco · <kbd>Esc</kbd> sai</p>
+    <h1 data-en="Pikachu, in splats">Pikachu, em splats</h1>
+    <p data-en="Fan art made with the same technique as the detailed Gengar: body, head, ears, arms, feet and tail blended into a single solid, with the face and markings painted right onto the surface." class="lead">Fan art feita com a mesma técnica do Gengar detalhado: corpo, cabeça, orelhas, braços, pés e rabo fundidos num sólido só, com o rosto e as marcas pintados direto na superfície.</p>
+    <p data-en="Enter the &lt;strong&gt;Dimension Explorer&lt;/strong&gt;, the 3D mode: &lt;kbd&gt;drag&lt;/kbd&gt; to orbit · &lt;kbd&gt;wheel&lt;/kbd&gt; to zoom · &lt;kbd&gt;right button&lt;/kbd&gt; to pan · &lt;kbd&gt;Esc&lt;/kbd&gt; to exit" class="hint">Entre no <strong>Dimension Explorer</strong>, o modo 3D: <kbd>arrastar</kbd> gira · <kbd>roda</kbd> aproxima · <kbd>botão direito</kbd> move o foco · <kbd>Esc</kbd> sai</p>
   </header>
 
   <section aria-label="Pikachu">
     <a class="scene hero-card" id="pikachu-de-verdade" href="pikachu-de-verdade/index.html">
-      <img src="thumbs/pikachu-de-verdade.png" alt="Pikachu amarelo com bochechas vermelhas e rabo de raio, sobre um gramado com flores" width="720" height="480">
+      <img data-en-alt="Yellow Pikachu with red cheeks and a lightning-bolt tail, on a lawn with flowers" src="thumbs/pikachu-de-verdade.png" alt="Pikachu amarelo com bochechas vermelhas e rabo de raio, sobre um gramado com flores" width="720" height="480">
       <div class="text">
-        <span class="num">35.950 SPLATS · RES 0,026</span>
-        <h3>Pikachu de verdade</h3>
+        <span data-en="35,950 SPLATS · RES 0.026" class="num">35.950 SPLATS · RES 0,026</span>
+        <h3 data-en="The real Pikachu">Pikachu de verdade</h3>
         <ul class="facts">
-          <li><b>Rabo de raio:</b> um contorno 2D em zigue-zague extrudado com <code>S.extrude</code>, de pé atrás do corpo.</li>
-          <li><b>Rosto pintado:</b> olhos com brilho, nariz, boca em “ω” e bochechas vermelhas, tudo com <code>tex</code>.</li>
-          <li><b>Marcas:</b> pontas pretas nas orelhas, duas listras nas costas e a base marrom do rabo.</li>
-          <li><b>Junção suave:</b> <code>S.join('round')</code> com raio 0,1 une todas as peças.</li>
+          <li data-en="&lt;b&gt;Lightning tail:&lt;/b&gt; a zigzag 2D outline extruded with &lt;code&gt;S.extrude&lt;/code&gt;, standing behind the body."><b>Rabo de raio:</b> um contorno 2D em zigue-zague extrudado com <code>S.extrude</code>, de pé atrás do corpo.</li>
+          <li data-en="&lt;b&gt;Painted face:&lt;/b&gt; glinting eyes, nose, “ω” mouth and red cheeks, all with &lt;code&gt;tex&lt;/code&gt;."><b>Rosto pintado:</b> olhos com brilho, nariz, boca em “ω” e bochechas vermelhas, tudo com <code>tex</code>.</li>
+          <li data-en="&lt;b&gt;Markings:&lt;/b&gt; black ear tips, two stripes on the back and the brown tail base."><b>Marcas:</b> pontas pretas nas orelhas, duas listras nas costas e a base marrom do rabo.</li>
+          <li data-en="&lt;b&gt;Smooth blend:&lt;/b&gt; &lt;code&gt;S.join(&#x27;round&#x27;)&lt;/code&gt; with a 0.1 radius joins every part."><b>Junção suave:</b> <code>S.join('round')</code> com raio 0,1 une todas as peças.</li>
         </ul>
-        <span class="go">◈ Entrar no Dimension Explorer</span>
+        <span data-en="◈ Enter the Dimension Explorer" class="go">◈ Entrar no Dimension Explorer</span>
       </div>
     </a>
   </section>
 
   <section class="film" id="animacoes">
-    <h2>Animações</h2>
-    <p class="lead">Vídeos renderizados pelo Ink Studio, quadro a quadro, com o mesmo esqueleto das animações do Gengar, agora com cabeça, orelhas e rabo móveis.</p>
+    <h2 data-en="Animations">Animações</h2>
+    <p data-en="Videos rendered frame by frame by Ink Studio, with the same skeleton as the Gengar animations, now with a movable head, ears and tail." class="lead">Vídeos renderizados pelo Ink Studio, quadro a quadro, com o mesmo esqueleto das animações do Gengar, agora com cabeça, orelhas e rabo móveis.</p>
     <div class="clips">
       <figure class="clip featured">
         <video src="pikachu-animacoes/choque.mp4" poster="pikachu-animacoes/choque.png" controls muted loop playsinline preload="metadata"></video>
         <figcaption>
-          <span class="tag">EM DESTAQUE · 8 SEGUNDOS · 120 QUADROS</span>
-          <strong>Choque do trovão</strong>
+          <span data-en="FEATURED · 8 SECONDS · 120 FRAMES" class="tag">EM DESTAQUE · 8 SEGUNDOS · 120 QUADROS</span>
+          <strong data-en="Thunderbolt">Choque do trovão</strong>
           <ul class="beats">
-            <li><b>0–1 s</b>Parado, respirando; mexe uma orelha.</li>
-            <li><b>1–2 s</b>Agacha, inclina para a frente e levanta as orelhas.</li>
-            <li><b>1,6–4,2 s</b>As bochechas faíscam cada vez mais e o corpo vibra.</li>
-            <li><b>4,2–5,8 s</b>Solta o choque: clarão, raios em zigue-zague com galhos piscando em volta e a câmera treme.</li>
-            <li><b>6,3–8 s</b>Comemora com um pulinho, acenando e abanando o rabo.</li>
+            <li data-en="&lt;b&gt;0–1 s&lt;/b&gt;Standing still, breathing; twitches an ear."><b>0–1 s</b>Parado, respirando; mexe uma orelha.</li>
+            <li data-en="&lt;b&gt;1–2 s&lt;/b&gt;Crouches, leans forward and perks up its ears."><b>1–2 s</b>Agacha, inclina para a frente e levanta as orelhas.</li>
+            <li data-en="&lt;b&gt;1.6–4.2 s&lt;/b&gt;The cheeks spark harder and harder and the body trembles."><b>1,6–4,2 s</b>As bochechas faíscam cada vez mais e o corpo vibra.</li>
+            <li data-en="&lt;b&gt;4.2–5.8 s&lt;/b&gt;Releases the shock: a flash, forked zigzag bolts flickering all around and a shaking camera."><b>4,2–5,8 s</b>Solta o choque: clarão, raios em zigue-zague com galhos piscando em volta e a câmera treme.</li>
+            <li data-en="&lt;b&gt;6.3–8 s&lt;/b&gt;Celebrates with a little hop, waving and wagging its tail."><b>6,3–8 s</b>Comemora com um pulinho, acenando e abanando o rabo.</li>
           </ul>
         </figcaption>
       </figure>
       <figure class="clip">
         <video src="pikachu-animacoes/feliz.mp4" poster="pikachu-animacoes/feliz.png" controls muted loop playsinline preload="metadata"></video>
-        <figcaption><span class="tag">LOOP · 6 SEGUNDOS</span><strong>Pikachu feliz</strong>Três pulinhos com o corpo esticando e achatando, orelhas balançando com atraso, aceno, cabeça inclinada e rabo abanando. <a class="back" href="pikachu-animacoes/feliz.gif">Abrir como GIF</a></figcaption>
+        <figcaption data-en="&lt;span class=&quot;tag&quot;&gt;LOOP · 6 SECONDS&lt;/span&gt;&lt;strong&gt;Happy Pikachu&lt;/strong&gt;Three little hops with the body stretching and squashing, ears swinging with a lag, a wave, a tilted head and a wagging tail. &lt;a class=&quot;back&quot; href=&quot;pikachu-animacoes/feliz.gif&quot;&gt;Open as GIF&lt;/a&gt;"><span class="tag">LOOP · 6 SEGUNDOS</span><strong>Pikachu feliz</strong>Três pulinhos com o corpo esticando e achatando, orelhas balançando com atraso, aceno, cabeça inclinada e rabo abanando. <a class="back" href="pikachu-animacoes/feliz.gif">Abrir como GIF</a></figcaption>
       </figure>
       <div class="rig">
-        <span class="tag">COMO SE MEXE</span>
-        <h3>Um esqueleto de 9 partes</h3>
-        <p>Cada splat do Pikachu pertence a uma parte: corpo, cabeça, duas orelhas, dois braços, dois pés ou rabo, decidida pela posição dele em relação a cada osso.</p>
-        <p>A cada quadro, cada parte gira em volta do seu ponto de giro, e a forma de cada splat gira junto (<code>C' = M·C·Mᵀ</code>). As orelhas seguem a cabeça, e a cabeça segue o corpo.</p>
-        <p>Raios e faíscas são splats extras, brilhantes e quase sem espessura, que piscam alternando três grupos.</p>
+        <span data-en="HOW IT MOVES" class="tag">COMO SE MEXE</span>
+        <h3 data-en="A 9-part skeleton">Um esqueleto de 9 partes</h3>
+        <p data-en="Every Pikachu splat belongs to one part: body, head, two ears, two arms, two feet or tail, decided by its position relative to each bone.">Cada splat do Pikachu pertence a uma parte: corpo, cabeça, duas orelhas, dois braços, dois pés ou rabo, decidida pela posição dele em relação a cada osso.</p>
+        <p data-en="Every frame, each part rotates around its own pivot, and each splat&#x27;s shape rotates with it (&lt;code&gt;C&#x27; = M·C·Mᵀ&lt;/code&gt;). The ears follow the head, and the head follows the body.">A cada quadro, cada parte gira em volta do seu ponto de giro, e a forma de cada splat gira junto (<code>C' = M·C·Mᵀ</code>). As orelhas seguem a cabeça, e a cabeça segue o corpo.</p>
+        <p data-en="Bolts and sparks are extra splats, bright and almost paper-thin, flickering by alternating three groups.">Raios e faíscas são splats extras, brilhantes e quase sem espessura, que piscam alternando três grupos.</p>
       </div>
     </div>
   </section>
 
   <footer>
-    <p><a class="back" href="index.html">← Voltar para todas as cenas</a></p>
-    <p>Pikachu é um personagem de Pokémon, © Nintendo / Creatures / GAME FREAK / The Pokémon Company. Fan art sem fins comerciais, não afiliada.</p>
+    <p data-en="&lt;a class=&quot;back&quot; href=&quot;index.html&quot;&gt;← Back to all scenes&lt;/a&gt;"><a class="back" href="index.html">← Voltar para todas as cenas</a></p>
+    <p data-en="Pikachu is a Pokémon character, © Nintendo / Creatures / GAME FREAK / The Pokémon Company. Non-commercial, unaffiliated fan art.">Pikachu é um personagem de Pokémon, © Nintendo / Creatures / GAME FREAK / The Pokémon Company. Fan art sem fins comerciais, não afiliada.</p>
   </footer>
 </div>
 <script>
@@ -120,5 +120,6 @@
     } catch (error) { /* sem armazenamento: o Sair usa o histórico do navegador */ }
   }));
 </script>
+<script src="i18n.js?v=202611182015"></script>
 </body>
 </html>
