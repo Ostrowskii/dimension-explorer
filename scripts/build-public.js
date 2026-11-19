@@ -16,7 +16,7 @@ for (const scene of scenes) {
       data = data.toString()
         .replace(/\s*<!-- fanart:start -->[\s\S]*?<!-- fanart:end -->/g, '')
         .replace('<a class="brand" href="../index.html">← Dimension Explorer</a>', '<span class="brand">Dimension Explorer</span>')
-        .replace('<link rel="stylesheet" href="../panel.css" />', `<style>\n${panelCss}</style>`);
+        .replace(/<link rel="stylesheet" href="\.\.\/panel\.css(\?v=\d+)?" \/>/, `<style>\n${panelCss}</style>`);
     }
     fs.writeFileSync(path.join(out, scene, file), data);
   }
@@ -30,7 +30,7 @@ for (const image of [...scenes, 'como-pontos', 'como-elipses', 'como-modelo']) f
 const css = fs.readFileSync(path.join(root, 'home.css'), 'utf8');
 const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8')
   .replace(/\s*<!-- fanart:start -->[\s\S]*?<!-- fanart:end -->/g, '')
-  .replace('<link rel="stylesheet" href="home.css">', `<style>\n${css}</style>`)
+  .replace(/<link rel="stylesheet" href="home\.css(\?v=\d+)?">/, `<style>\n${css}</style>`)
   .replace(/<!doctype html>\s*|<\/?html[^>]*>\s*|<\/?head>\s*|<\/?body>\s*|<meta charset[^>]*>\s*|<meta name="viewport"[^>]*>\s*/gi, '')
   ;
 fs.writeFileSync(path.join(out, 'home.html'), home);
@@ -38,7 +38,7 @@ fs.writeFileSync(path.join(out, 'home.html'), home);
 // Página do passo a passo: arquivo à parte, com o CSS embutido e links de volta para a página inicial.
 const tutorial = fs.readFileSync(path.join(root, 'como-fazer.html'), 'utf8')
   .replace(/\s*<!-- fanart:start -->[\s\S]*?<!-- fanart:end -->/g, '')
-  .replace('<link rel="stylesheet" href="home.css">', `<style>\n${css}</style>`)
+  .replace(/<link rel="stylesheet" href="home\.css(\?v=\d+)?">/, `<style>\n${css}</style>`)
   .replace(/href="index\.html/g, 'href="./');
 fs.writeFileSync(path.join(out, 'como-fazer.html'), tutorial);
 console.log('public/ pronto:', scenes.join(', '));
