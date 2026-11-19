@@ -15,34 +15,36 @@ body.de {
 body.de.electric { --gold: #f6d03c; }
 body.de.ghost { --night: #0c0a14; --glass: #120f20e6; --chip: #1b1630; --line: #352b55; --gold: #c9a9ff; }
 
-/* ---------- barra do modo ---------- */
+/* ---------- barra do modo: o próprio nome do modo é o botão de sair ---------- */
 .de-bar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 5;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: max(12px, env(safe-area-inset-top, 0px)) max(18px, env(safe-area-inset-right, 0px)) 12px max(18px, env(safe-area-inset-left, 0px));
-  background: linear-gradient(to bottom, #000a 0%, #0006 60%, transparent 100%);
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: max(14px, env(safe-area-inset-top, 0px)) max(18px, env(safe-area-inset-right, 0px)) 14px max(18px, env(safe-area-inset-left, 0px));
+  background: linear-gradient(to bottom, #000b 0%, #0005 65%, transparent 100%);
   pointer-events: none;
 }
 .de-bar > * { pointer-events: auto; }
-.de-mode { display: flex; align-items: baseline; gap: 12px; min-width: 0; flex-wrap: wrap; }
-.de-badge {
-  font-family: var(--display); font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold);
-  border: 1px solid var(--gold); border-radius: 999px; padding: 4px 10px; background: #0008; white-space: nowrap;
+.de-exit {
+  display: inline-flex; align-items: center; gap: 12px; flex: none;
+  font-family: var(--display); font-size: 1.05rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--gold); background: #000a; border: 2px solid var(--gold); border-radius: 999px;
+  padding: 11px 20px 11px 16px; cursor: pointer; box-shadow: 0 6px 24px #0009;
+  transition: background .15s, color .15s;
+}
+.de-exit .arrow { font-family: var(--body); font-size: 1.25rem; line-height: 1; transition: transform .15s; }
+.de-exit:hover, .de-exit:focus-visible { background: var(--gold); color: var(--night); outline: none; }
+.de-exit:hover .arrow, .de-exit:focus-visible .arrow { transform: translateX(-3px); }
+.de-exit kbd {
+  font-family: var(--display); font-size: .72rem; letter-spacing: .04em; text-transform: none;
+  color: inherit; border: 1px solid currentColor; border-radius: 4px; padding: 1px 6px; opacity: .8;
 }
 .de-bar h1 {
   margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.6rem; line-height: 1.1; color: var(--cream);
   text-shadow: 0 2px 12px #000c; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
 }
-.de-exit {
-  display: inline-flex; align-items: center; gap: 10px; flex: none;
-  font: 600 1rem/1 var(--body); color: var(--night); background: var(--gold);
-  border: 0; border-radius: 999px; padding: 11px 18px; cursor: pointer; box-shadow: 0 6px 20px #0008;
-}
-.de-exit:hover, .de-exit:focus-visible { filter: brightness(1.08); outline: 2px solid var(--cream); outline-offset: 2px; }
-.de-exit .x { font-size: 1.1rem; }
-.de-exit kbd {
-  font-family: var(--display); font-size: .7rem; font-weight: 500; color: var(--night);
-  border: 1px solid #0005; border-radius: 4px; padding: 1px 5px; background: #fff3;
+.de-badge {
+  font-family: var(--display); font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold);
+  border: 1px solid var(--gold); border-radius: 999px; padding: 4px 10px; background: #0008; white-space: nowrap;
 }
 
 /* ---------- tela de entrada ---------- */
@@ -60,7 +62,7 @@ body.de.ghost { --night: #0c0a14; --glass: #120f20e6; --chip: #1b1630; --line: #
 /* ---------- painel de controles ---------- */
 .panel {
   position: fixed;
-  top: calc(max(12px, env(safe-area-inset-top, 0px)) + 62px);
+  top: calc(max(14px, env(safe-area-inset-top, 0px)) + 70px);
   left: max(18px, env(safe-area-inset-left, 0px));
   width: min(320px, calc(100vw - 36px));
   padding: 0;
@@ -109,11 +111,11 @@ body.de.ghost { --night: #0c0a14; --glass: #120f20e6; --chip: #1b1630; --line: #
 .panel .video-link { margin: 0; color: var(--gold); font-size: .85rem; font-weight: 600; text-underline-offset: 3px; }
 
 @media (max-width: 600px) {
-  .de-bar h1 { font-size: 1.2rem; }
-  .de-badge { font-size: .66rem; padding: 3px 8px; }
-  .de-exit { padding: 10px 14px; }
+  .de-bar { gap: 8px; }
+  .de-bar h1 { font-size: 1.15rem; width: 100%; }
+  .de-exit { font-size: .82rem; padding: 9px 14px 9px 12px; }
   .de-exit kbd { display: none; }
-  .panel { left: max(10px, env(safe-area-inset-left, 0px)); width: calc(100vw - 20px); top: calc(max(12px, env(safe-area-inset-top, 0px)) + 78px); }
+  .panel { left: max(10px, env(safe-area-inset-left, 0px)); width: calc(100vw - 20px); top: calc(max(14px, env(safe-area-inset-top, 0px)) + 96px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .panel .toggle::before { transition: none; }
